@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const user = new Schema({
-firstName:{
+const bcrypt=require('bcryptjs')
+const jwt=require('jsonwebtoken')
+
+const userSchema = new Schema({
+Username:{
   type:String,
   required:true
-},
-lastName:{
-  type:String
 },
 email:{
   type:String,
@@ -39,5 +39,28 @@ isAdmin:{
 
 })
 
-const User = mongoose.model('user',user)
+
+
+userSchema.methods.generateAuthToken=async function(){
+  const usr=this
+  const token=jwt.sign({_id:user._id.toString()},process.env.JWT_SECRET)
+  usr.tokens=user.tokens.concat({token})
+  await usr.save()
+    return token
+}
+userSchema.statics.findByCredentials=async(email,password)=>{
+  const usr=await User.findOne({email})
+  if(!usr){
+    throw new Error('Unable to login')
+  }
+  const isMatch= await bcrypt.compare(password,usr.password)
+  if(!isMatch){
+    throw new Error('Unable to login')
+  }
+  return usr
+}
+
+
+
+const User = mongoose.model('Usr',userSchema)
 module.exports= User
