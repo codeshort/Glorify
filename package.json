@@ -11,11 +11,25 @@
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.16.4",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
-    "morgan": "~1.9.1"
-  }
+    "mongoose-timestamp": "^0.6.0",
+    "morgan": "~1.9.1",
+    "path": "^0.12.7"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeshort/Glorify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeshort/Glorify/issues"
+  },
+  "homepage": "https://github.com/codeshort/Glorify#readme",
+  "description": ""
 }

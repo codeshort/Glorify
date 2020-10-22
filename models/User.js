@@ -33,7 +33,7 @@ avatar:{
 },
 gender:{
   type:String,
-  required:true
+  //required:true
 },
 company:{
   type:String
@@ -71,5 +71,5 @@ userSchema.statics.findByCredentials=async(email,password)=>{
 
 
 
-const User = mongoose.model('Usr',userSchema)
+const User = mongoose.model('User',userSchema)
 module.exports= User
