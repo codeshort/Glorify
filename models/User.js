@@ -1,4 +1,13 @@
 const mongoose = require('mongoose')
+
+const db = 'mongodb+srv://Globalshala:OnlineDatabase@cluster0.wkx7c.mongodb.net/DB?retryWrites=true&w=majority'
+mongoose.connect(db,{useNewUrlParser: true,
+useUnifiedTopology: true,
+useFindAndModify: false,
+useCreateIndex: true},()=>{
+  console.log('Database connected')
+})
+
 const Schema = mongoose.Schema
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')

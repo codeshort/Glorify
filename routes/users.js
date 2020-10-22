@@ -12,13 +12,17 @@ var auth=require('../middleware/auth.js');
 
 router.post('/login',async(req,res)=>{
   try{
+
     console.log("reached");
     // const user= await User.findByCredentials(req.body.email,req.body.password)
     // const token =await user.generateAuthToken()
-    res.cookie('jwt',{token:"tojotogjotgjt"}, { maxAge: 3600000 })
-    console.log(document.cookie.jwt);
+    console.log("cookie")
+    console.log(req.cookies);
+    res.cookie('jwt',"dssssssss", {maxAge: 3600000 })
+    console.log(req.cookie.jwt);
     console.log("cookie");
-    res.send({user})
+    res.render('https://www.google.com')
+    res.send("ss");
   }catch(e){
       res.status(400).send()
   }

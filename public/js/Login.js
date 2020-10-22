@@ -20,15 +20,19 @@ const submit=document.getElementById('lg_submit').addEventListener('click',(e)=>
   console.log(password1.value);
 console.log("dfysuanlkms")
   fetch('/login', {
-      method: 'POST',
+      method: 'POST', credentials: 'include',
      //  headers: {
      //   'Authorization': 'Bearer ' + userToken
      // },
-       body: JSON.stringify({email:email1.value,password:password1.value})
-  })
-  .then()
-  .then(data => { console.log(data) })
-  .catch(err => { console.log(err) })
+  //   dataType: "json",
 
+      headers: { 'Content-Type': 'application/json' },
+
+       body: JSON.stringify({email:email1.value,password:password1.value})
+  }).then(function(response) {
+    return response.json();
+  }).then(function(data) {
+  console.log(data);
+  });
 
 })
