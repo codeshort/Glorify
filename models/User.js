@@ -52,9 +52,9 @@ isAdmin:{
 
 userSchema.methods.generateAuthToken=async function(){
   const usr=this
-  const token=jwt.sign({_id:user._id.toString()},process.env.JWT_SECRET)
-  usr.tokens=user.tokens.concat({token})
-  await usr.save()
+  console.log("dsds",usr);
+  const token=await jwt.sign({_id:usr._id.toString()},"secret")
+
     return token
 }
 userSchema.statics.findByCredentials=async(email,password)=>{

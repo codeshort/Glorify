@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -31,5 +31,6 @@
     "url": "https://github.com/codeshort/Glorify/issues"
   },
   "homepage": "https://github.com/codeshort/Glorify#readme",
+  "devDependencies": {},
   "description": ""
 }

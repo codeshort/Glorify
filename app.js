@@ -36,15 +36,15 @@ mongoose.connect(db,  {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(indexRouter);
 app.use(usersRouter);
 
-app.get('/',(req,res)=>{
-
-  res.sendFile(__dirname+'/public/Sign/signup-signin.html');
-})
+// app.get('/',(req,res)=>{
+//
+//   res.sendFile(__dirname+'/public/Sign/signup-signin.html');
+// })
 app.post('/',(req,res)=>{
  bcrypt.hash(req.body.password,10,(err,hash)=>{
    if(err){
@@ -63,13 +63,13 @@ app.post('/',(req,res)=>{
  })
 res.redirect('/login')
 })
-app.get('/login',(req,res)=>{
-res.sendFile(__dirname+'/public/Sign/signup-signin.html');
-})
-app.post('/login',(req,res)=>{
-console.log('Redirected')
-//  res.sendFile('/public/signup-signin.html');
-})
+// app.get('/login',(req,res)=>{
+// res.sendFile(__dirname+'/public/Sign/signup-signin.html');
+// })
+// app.post('/login',(req,res)=>{
+// console.log('Redirected')
+// //  res.sendFile('/public/signup-signin.html');
+// })
 app.get('/company',(req,res)=>{
   res.sendFile(__dirname+'/public/host-join_company_pages/companysignup.html')
 })
