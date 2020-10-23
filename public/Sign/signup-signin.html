@@ -7,52 +7,52 @@
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="css/signup-signin.css" />
+    <link rel="stylesheet" href="./css/signup-signin.css" />
     <title>Sign in & Sign up Form</title>
   </head>
   <body>
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <form action="/login" method ="post" class="sign-in-form">
             <h2 class="title">Sign in</h2>
 
             <!--Taking Username input-->
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="email" placeholder="Email" id="lg_email"
-                  pattern=".+@globex.com" size="30" required/>
+                    name= "email" pattern=".+@++.com" size="30" required/>
             </div>
 
               <!--Taking password input-->
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" id="lg_password" placeholder="Password" />
+              <input name = "password" type="password" id="lg_password" placeholder="Password" />
             </div>
-            <input type="submit" id="lg_submit" value="Login" class="btn solid" />
+            <input  type="submit" id="lg_submit" value="Login" class="btn solid" />
           </form>
 
           <!--Sign-Uu Form-->
-          <form action="#" class="sign-up-form">
+          <form action="/"  method ="post" class="sign-up-form">
             <h2 class="title">Sign up</h2>
 
               <!--Taking Username input-->
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Username" name="Username"/>
             </div>
 
               <!--Taking Email input-->
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="email" placeholder="Email" id="email"
-                  pattern=".+@globex.com" size="30" required/>
+                  name ="email" pattern=".+@++.com" size="30" required/>
             </div>
 
               <!--Taking Password input-->
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" name ="password" placeholder="Password" />
             </div>
             <input type="submit" class="btn" value="Sign up" />
           </form>
