@@ -12,6 +12,7 @@ var user
 var comp;
 const User = require('./models/User')
 const Company = require('./models/Company')
+const auth = require('./middleware/auth.js')
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');
@@ -36,11 +37,11 @@ mongoose.connect(db,  {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(indexRouter);
 app.use(usersRouter);
-
+app.use(express.static(path.join(__dirname, '/public')));
 // app.get('/',(req,res)=>{
 //
 //   res.sendFile(__dirname+'/public/Sign/signup-signin.html');
@@ -86,10 +87,12 @@ comp.save().then(()=>{
 res.redirect('/join')
 })
 app.get('/join',(req,res)=>{
-  res.sendFile(__dirname+'/public/host-join_company_pages/companyjoin.html')
+  res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companyjoin.html'))
 })
-app.post('/join',(req,res)=>{
+app.post('/join',auth,(req,res)=>{
   console.log('Redirected')
+  comp_code = req.body.CompanyCode
+  Company.findOne({"companyCode": comp_code}, 'companyName')
 })
 
 

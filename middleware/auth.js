@@ -3,17 +3,22 @@ const User=require('../models/User')
 
 const auth =async(req,res,next)=>{
   try{
-    const token=req.header('Authorization').replace('Bearer ','')
-    const decoded=jwt.verify(token,'htaed')
-    const user =await User.findOne({_id:decoded._id,'tokens.token':token})
+    console.log("abcd ", req.header('Authorization'))
+
+    const token= await req.header('Authorization').replace('Bearer ','')
+    const decoded=await jwt.verify(token,'secret')
+    console.log(token+"*****************"+decoded._id)
+    const user =await User.findOne({_id:decoded._id})
+    console.log("efgh ",user)
     if(!user){
       throw new Error()
     }
     req.user=user
-    req.token=token
     next()
   }catch(e){
+    console.log(e)
     res.status(400).send({error:'Please authenciate'})
+
   }
 }
 

@@ -21,10 +21,8 @@ router.post('/login',async (req,res)=>{
     if(err){
         console.log('Password can not be encrypted')
     }
-
-
       console.log(req.body.email,req.body.password);
-console.log(User,"gghhjh");
+      console.log(User,"gghhjh");
 
  User.findOne({"email":req.body.email,"password":req.body.password},'Username email password',   async (err, usr)=> {
   if (err) {
@@ -44,11 +42,6 @@ console.log(User,"gghhjh");
     res.send("yo");
 })
 });
-
-
-
-
-
 }
   catch(e){
       res.status(400).send()
@@ -57,8 +50,6 @@ console.log(User,"gghhjh");
 
 router.get('/logout',auth ,async(req,res)=>{
   try {
-
-
  console.log("f",req.cookies);
 
     // req.cookies.set('jwt', {maxAge: 0});
