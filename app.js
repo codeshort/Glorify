@@ -7,6 +7,9 @@ var mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var bcrypt = require('bcryptjs')
+var bodyParser = require('body-parser');
+var cors = require('cors')
+
 var app = express();
 var user
 var comp;
@@ -31,8 +34,6 @@ mongoose.connect(db,  {
 )
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
-
-
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -86,13 +87,45 @@ comp.save().then(()=>{
 })
 res.redirect('/join')
 })
+//
+// app.use(function (req, res, next) {
+//
+//     // Website you wish to allow to connect
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//
+//     // Request methods you wish to allow
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//
+//     // Request headers you wish to allow
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//
+//     // Set to true if you need the website to include cookies in the requests sent
+//     // to the API (e.g. in case you use sessions)
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//
+//     // Pass to next layer of middleware
+//     next();
+// });
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 app.get('/join',(req,res)=>{
   res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companyjoin.html'))
 })
-app.post('/join',auth,(req,res)=>{
-  console.log('Redirected')
-  comp_code = req.body.CompanyCode
-  Company.findOne({"companyCode": comp_code}, 'companyName')
+
+app.post('/join',auth, async (req,res)=>{
+  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  console.log('Redirected',req.body.CompanyCode)
+var comp_code = req.body.CompanyCode
+ // res.header('Access-Control-Allow-Headers', "*");
+ // app.options('http://localhost:3000',cors())
+ // app.use(cors())
+
+// req.method = 'get';
+// res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companysignup.html'))
+ res.redirect('http://localhost:3000')
+//  Company.findOne({"companyCode": comp_code}, 'companyName')
 })
 
 
