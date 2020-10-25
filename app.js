@@ -29,9 +29,7 @@ mongoose.connect(db,  {
 //useFindAndModify: false,
   useCreateIndex: true
 
-}
-
-)
+})
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
 // app.use(logger('dev'));
@@ -43,6 +41,9 @@ app.use(cookieParser());
 app.use(indexRouter);
 app.use(usersRouter);
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 // app.get('/',(req,res)=>{
 //
 //   res.sendFile(__dirname+'/public/Sign/signup-signin.html');
@@ -75,17 +76,43 @@ res.redirect('/login')
 app.get('/company',(req,res)=>{
   res.sendFile(__dirname+'/public/host-join_company_pages/companysignup.html')
 })
-app.post('/company',(req,res)=>{
-comp = new Company({
-  companyName:req.body.name,
-  description:req.body.description,
-  location:req.body.location,
-  companyCode:"abcd"
-})
-comp.save().then(()=>{
-  console.log('Company Registered')
-})
-res.redirect('/join')
+app.post('/company',auth,async(req,res)=>{
+  try{
+    const login_id = req.user._id
+    console.log(login_id)
+    comp = await new Company({
+      companyName:req.body.companyName,
+      description:req.body.description,
+      location:req.body.location,
+      admin: [req.user._id],
+      companyCode:"abcd",
+      members:[{
+            userID:req.user._id,
+          rewardBasket:0,
+          giveawayBasket:0
+      }]
+    })
+    console.log("Save ke pehle tak")
+    comp.save().then(()=>{
+      console.log('Company Registered')
+    })
+    console.log(login_id)
+    await User.findOneAndUpdate({_id: login_id} , {company: req.body.companyName , isInCompany: true , isAdmin:false});
+        var obj={
+          userID:req.user._id,
+          rewardBasket:0,
+          giveawayBasket:0
+        }
+       // var comp_members = compny.members;
+       // comp_members.push(obj)
+       // compny.members= comp_members
+       // var comp_admins = compny.admin;
+       // comp_admins.push(req.user._id)
+       // compny.admin = comp_admins
+
+    res.redirect('/join')
+  }
+  catch(e) {}
 })
 //
 // app.use(function (req, res, next) {
@@ -106,9 +133,6 @@ res.redirect('/join')
 //     // Pass to next layer of middleware
 //     next();
 // });
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 
 app.get('/join',(req,res)=>{
   res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companyjoin.html'))
@@ -116,18 +140,54 @@ app.get('/join',(req,res)=>{
 
 app.post('/join',auth, async (req,res)=>{
   // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  console.log('Redirected',req.body.CompanyCode)
-var comp_code = req.body.CompanyCode
+//  console.log('Redirected',req.body.CompanyCode)
+try{
+   var comp_code = req.body.CompanyCode
+   console.log(req.body.CompanyCode)
+  Company.findOne({companyCode: comp_code},'companyName members', async(err,compny) =>{
+    if(err)
+    {
+      console.log('error box ', err)
+      return
+    }
+    found_company= compny.companyName
+    console.log(found_company)
+    const login_id = req.user._id
+    console.log(login_id)
+    await User.findOneAndUpdate({_id: login_id} , {company: found_company , isInCompany: true , isAdmin:false} );
+    console.log("this happened")
+    try{
+      var obj={
+        userID:req.user._id,
+        rewardBasket:0,
+        giveawayBasket:0
+      }
+     var comp_members = compny.members;
+     comp_members.push(obj)
+     compny.members= comp_members
+     compny.save().then(() =>{
+       console.log("Join waala save hua hai")
+     })
+   }
+
+  catch(e){console.log("error-box-2" , e)}
+      console.log("this too happened")
+  })
  // res.header('Access-Control-Allow-Headers', "*");
  // app.options('http://localhost:3000',cors())
  // app.use(cors())
 
 // req.method = 'get';
 // res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companysignup.html'))
- res.redirect('http://localhost:3000')
+console.log('Ye chala')
+res.redirect('/company')
 //  Company.findOne({"companyCode": comp_code}, 'companyName')
+}
+catch(e)
+{
+  console.log(e)
+}
 })
-
 
 
 // app.use('/', indexRouter);

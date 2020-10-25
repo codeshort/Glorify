@@ -26,7 +26,7 @@ posts:[{
   //timestamps:true
 }],
 admin:[{
-  type:String
+  type:mongoose.Schema.Types.ObjectID
 }],
 members:[{
       userID:{

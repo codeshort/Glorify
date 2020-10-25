@@ -3,7 +3,7 @@ const User=require('../models/User')
 
 const auth =async(req,res,next)=>{
   try{
-res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     console.log("again")
     console.log("abcd ", req.header('Authorization'))
 

@@ -39,7 +39,7 @@ router.post('/login',async (req,res)=>{
     res.cookie('jwt',token, {maxAge: 3600000 })
     console.log(req.cookies);
     console.log("cookie");
-    res.send("yo");
+    res.redirect('/join');
 })
 });
 }
