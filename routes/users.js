@@ -3,6 +3,7 @@ var router = express.Router();
 var User=require('../models/User.js');
 var auth=require('../middleware/auth.js');
 var bcrypt=require('bcryptjs')
+var path = require('path')
 /* GET users listing. */
 
 // router.get('/', function(req, res, next) {
@@ -10,7 +11,7 @@ var bcrypt=require('bcryptjs')
 // });
 //
 router.get('/login',async (req,res)=>{
-  console.log("login");
+    res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
 })
 
 router.post('/login',async (req,res)=>{
@@ -39,7 +40,7 @@ router.post('/login',async (req,res)=>{
     res.cookie('jwt',token, {maxAge: 3600000 })
     console.log(req.cookies);
     console.log("cookie");
-    res.redirect('/join');
+    res.redirect('/after_login');
 })
 });
 }
