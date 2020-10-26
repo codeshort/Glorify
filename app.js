@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var bcrypt = require('bcryptjs')
 var bodyParser = require('body-parser');
 var cors = require('cors')
-
+   
 var app = express();
 var user
 var comp;
@@ -44,28 +44,19 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-// app.get('/',(req,res)=>{
-//
-//   res.sendFile(__dirname+'/public/Sign/signup-signin.html');
-// })
-app.post('/',(req,res)=>{
- bcrypt.hash(req.body.password,10,(err,hash)=>{
-   if(err){
-     return console.log('Password can not be encrpted')
-   }
-   user = new User({
-    Username:req.body.Username,
-    email:req.body.email,
-    password:hash
-  })
-  user.save().then(()=>{
-    console.log('Data saved')
-    console.log(user)
-  })
+app.get('/',(req,res)=>{
 
- })
-res.redirect('/login')
+  res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
 })
+
+app.get('/',(req,res)=>{
+
+  res.sendFile(path.join(__dirname+'/../public/Main_page/Main_page.html'));
+})
+
+
+
+
 // app.get('/login',(req,res)=>{
 // res.sendFile(__dirname+'/public/Sign/signup-signin.html');
 // })
