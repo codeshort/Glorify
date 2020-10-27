@@ -9,6 +9,21 @@
 # General
 --------------------------------------------------------------*/
 
+#avt{
+
+position:fixed;
+right:60px;
+top:10px;
+}
+
+#avt{
+  width:60px;
+  height:60px;
+}
+
+
+
+
 body {
   background: #fff;
   color: #444;
