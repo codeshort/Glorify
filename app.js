@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var bcrypt = require('bcryptjs')
 var bodyParser = require('body-parser');
 var cors = require('cors')
-   
+
 var app = express();
 var user
 var comp;
@@ -49,7 +49,7 @@ app.get('/',(req,res)=>{
   res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
 })
 
-app.get('/',(req,res)=>{
+app.get('/main_page',(req,res)=>{
 
   res.sendFile(path.join(__dirname+'/../public/Main_page/Main_page.html'));
 })

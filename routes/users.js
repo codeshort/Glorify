@@ -5,7 +5,7 @@ var auth=require('../middleware/auth.js');
 var bcrypt=require('bcryptjs')
 var path = require('path')
 /* GET users listing. */
-
+var mongoose = require('mongoose')
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
@@ -63,5 +63,18 @@ router.get('/logout',auth ,async(req,res)=>{
     res.status(500).send()
   }
 })
+
+router.get('/after_login',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/../public/Main_page0/After_login.html'));
+})
+
+router.get('/profile',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/../public/profile_page/profile.html'));
+})
+
+
+
+
+
 
 module.exports = router;

@@ -44,10 +44,6 @@ router.get('/login',(req,res)=>{
 
   res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
 })
-router.get('/after_login',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/../public/Main_page0/After_login.html'));
-})
-
 
 
 
