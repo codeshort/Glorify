@@ -44,7 +44,17 @@ isInCompany:{
 },
 isAdmin:{
   type:Boolean
-}
+},
+todo:[{
+  type: String
+}],
+working:[{
+  type: String
+}],
+done:[{
+  type: String
+}]
+
 
 })
 
