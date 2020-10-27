@@ -7,13 +7,13 @@ var User = require('../models/User')
 var bcrypt = require('bcryptjs')
 /* GET home page. */
 router.get('/main_page',(req,res)=>{
-    res.sendFile(path.join(__dirname+'/../public/Main_page/Main_page.html'));
+    res.render(path.join(__dirname+'/../public/Main_page/Main_page'));
 })
 
 
 router.get('/',(req,res)=>{
 
-  res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
+  res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 router.post('/',(req,res)=>{
  bcrypt.hash(req.body.password,10,(err,hash)=>{
@@ -42,7 +42,7 @@ res.redirect('/login')
 
 router.get('/login',(req,res)=>{
 
-  res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
+  res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 
 
