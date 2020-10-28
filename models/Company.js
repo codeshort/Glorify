@@ -22,6 +22,9 @@ posts:[{
   contains_image:{
     type:Boolean,
     default:false
+  },
+  image:{
+    type:Buffer
   }
   //timestamps:true
 }],
@@ -45,7 +48,6 @@ location:{
 },
 description:{
   type:String,
-  required:true
 },
 
 })
