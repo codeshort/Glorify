@@ -37,8 +37,6 @@ app.set('view engine','hbs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
 app.use(indexRouter);
 app.use(usersRouter);
 app.use(express.static(path.join(__dirname, '/public')));
@@ -106,6 +104,59 @@ app.post('/company',auth,async(req,res)=>{
   }
   catch(e) {}
 })
+// Profile page routing!!
+
+
+app.get('/profile',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/public/profile_page/profile1.0.html'));
+})
+app.post('/profile',auth,async(req,res) =>{
+
+
+
+
+});
+app.post('/post/add',auth,(req,res)=>{
+  try{
+    req.user.todo.push(req.body.name)
+    req.user.save().then(() => {
+      console.log('Added to do database ')
+    })
+  }
+  catch(e){
+    console.log('Todo-error',e);
+  }
+
+})
+//**************************************************************************************************************************//
+app.post('/post/working',auth,(req,res)=>{
+  try{
+    req.user.working.push(req.body.name)
+    req.user.save().then(() =>
+    {
+      console.log('Added to working database ')
+    })
+  }
+  catch(e)
+  {
+    console.log('working-error',e);
+  }
+})
+
+app.post('/post/done',auth,(req,res)=>{
+  try{
+    req.user.done.push(req.body.name)
+    req.user.save().then(() =>
+    {
+      console.log('Added to done database ')
+    })
+  }
+  catch(e)
+  {
+    console.log('done-error',e);
+  }
+})
+
 //
 // app.use(function (req, res, next) {
 //

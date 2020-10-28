@@ -68,13 +68,4 @@ router.get('/after_login',(req,res)=>{
   res.render(path.join(__dirname+'/../public/Main_page0/After_login'));
 })
 
-router.get('/profile',(req,res)=>{
-  res.render(path.join(__dirname+'/../public/profile_page/profile'));
-})
-
-
-
-
-
-
 module.exports = router;

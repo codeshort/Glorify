@@ -3,11 +3,9 @@ const User=require('../models/User')
 
 const auth =async(req,res,next)=>{
   try{
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    console.log("again")
-    console.log("abcd ", req.header('Authorization'))
+    console.log("abcd ", req.cookies['jwt'])
 
-    const token= await req.header('Authorization').replace('Bearer ','')
+    const token= await req.cookies['jwt'];
     const decoded=await jwt.verify(token,'secret')
     console.log(token+"*****************"+decoded._id)
     const user =await User.findOne({_id:decoded._id})
@@ -19,7 +17,7 @@ const auth =async(req,res,next)=>{
     next()
   }catch(e){
     console.log(e)
-    res.status(400).send({error:'Please authenciate'})
+    res.status(400).send({error:'Please authenticate'})
 
   }
 }
