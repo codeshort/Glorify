@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var bcrypt = require('bcryptjs')
 var bodyParser = require('body-parser');
 var cors = require('cors')
-
+var hbs = require('hbs')
 var app = express();
 var user
 var comp;
@@ -33,6 +33,7 @@ mongoose.connect(db,  {
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
 // app.use(logger('dev'));
+app.set('view engine','hbs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -46,12 +47,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.get('/',(req,res)=>{
 
-  res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
+  res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 
 app.get('/main_page',(req,res)=>{
 
-  res.sendFile(path.join(__dirname+'/../public/Main_page/Main_page.html'));
+  res.render(path.join(__dirname+'/../public/Main_page/Main_page'));
 })
 
 
@@ -65,7 +66,7 @@ app.get('/main_page',(req,res)=>{
 // //  res.sendFile('/public/signup-signin.html');
 // })
 app.get('/company',(req,res)=>{
-  res.sendFile(__dirname+'/public/host-join_company_pages/companysignup.html')
+  res.render(__dirname+'/public/host-join_company_pages/companysignup')
 })
 app.post('/company',auth,async(req,res)=>{
   try{
@@ -126,7 +127,7 @@ app.post('/company',auth,async(req,res)=>{
 // });
 
 app.get('/join',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/public/host-join_company_pages/companyjoin.html'))
+  res.render(path.join(__dirname+'/public/host-join_company_pages/companyjoin'))
 })
 
 app.post('/join',auth, async (req,res)=>{

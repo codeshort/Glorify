@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
 // });
 //
 router.get('/login',async (req,res)=>{
-    res.sendFile(path.join(__dirname+'/../public/Sign/signup-signin.html'));
+    res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 
 router.post('/login',async (req,res)=>{
@@ -65,11 +65,11 @@ router.get('/logout',auth ,async(req,res)=>{
 })
 
 router.get('/after_login',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/../public/Main_page0/After_login.html'));
+  res.render(path.join(__dirname+'/../public/Main_page0/After_login'));
 })
 
 router.get('/profile',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/../public/profile_page/profile.html'));
+  res.render(path.join(__dirname+'/../public/profile_page/profile'));
 })
 
 
