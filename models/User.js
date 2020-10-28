@@ -54,8 +54,6 @@ working:[{
 done:[{
   type: String
 }]
-
-
 })
 
 

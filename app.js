@@ -107,8 +107,12 @@ app.post('/company',auth,async(req,res)=>{
 // Profile page routing!!
 
 
-app.get('/profile',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/public/profile_page/profile1.0.html'));
+app.get('/profile',auth,(req,res)=>{
+  res.render(__dirname+'/public/profile_page/profile',{
+    todo: req.user.todo,
+    working:req.user.working,
+    done: req.user.done
+  });
 })
 app.post('/profile',auth,async(req,res) =>{
 
@@ -122,6 +126,7 @@ app.post('/post/add',auth,(req,res)=>{
     req.user.save().then(() => {
       console.log('Added to do database ')
     })
+      res.redirect('/profile')
   }
   catch(e){
     console.log('Todo-error',e);
@@ -136,6 +141,7 @@ app.post('/post/working',auth,(req,res)=>{
     {
       console.log('Added to working database ')
     })
+    res.redirect('/profile')
   }
   catch(e)
   {
@@ -150,6 +156,7 @@ app.post('/post/done',auth,(req,res)=>{
     {
       console.log('Added to done database ')
     })
+      res.redirect('/profile')
   }
   catch(e)
   {
