@@ -8,7 +8,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 			<link rel="stylesheet" href="https://cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
-			<link rel="stylesheet" href="./style.css">
+			<link rel="stylesheet" href="/posts-page/style.css">
 
 		<title></title>
 	</head>
@@ -142,6 +142,7 @@
 		                    </ul>
 		                  </div>
 		                  <div class="profile-feed">
+												{{#each feed}}
 												<div class="d-flex align-items-start profile-feed-item">
 												 <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
 												 <div class="ml-4">
@@ -150,10 +151,11 @@
 														 <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
 													 </h6>
 													 <p>
-														 When I first got into the online advertising business, I was looking for the magical combination
-														 that would put my website into the top search engine rankings
+														{{this.data}}
+
 													 </p>
-													 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="sample" class="rounded mw-100">
+
+													 <img src="data:image/png; base64 ,{{this.image}}" alt="sample" class="rounded mw-100">
 													 <p class="small text-muted mt-2 mb-0">
 														 <span>
 															 <i class="mdi mdi-star mr-1"></i>4
@@ -167,56 +169,10 @@
 													 </p>
 												 </div>
 											 </div>
-												<div class="d-flex align-items-start profile-feed-item">
-		                      <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
-		                      <div class="ml-4">
-		                        <h6>
-		                          Dylan Silva
-		                          <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-		                        </h6>
-		                        <p>
-		                          When I first got into the online advertising business, I was looking for the magical combination
-		                          that would put my website into the top search engine rankings
-		                        </p>
-		                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="sample" class="rounded mw-100">
-		                        <p class="small text-muted mt-2 mb-0">
-		                          <span>
-		                            <i class="mdi mdi-star mr-1"></i>4
-		                          </span>
-		                          <span class="ml-2">
-		                            <i class="mdi mdi-comment mr-1"></i>11
-		                          </span>
-		                          <span class="ml-2">
-		                            <i class="mdi mdi-reply"></i>
-		                          </span>
-		                        </p>
-		                      </div>
-		                    </div>
-		                    <div class="d-flex align-items-start profile-feed-item">
-		                      <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
-		                      <div class="ml-4">
-		                        <h6>
-		                          Dylan Silva
-		                          <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-		                        </h6>
-		                        <p>
-		                          When I first got into the online advertising business, I was looking for the magical combination
-		                          that would put my website into the top search engine rankings
-		                        </p>
-		                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="sample" class="rounded mw-100">
-		                        <p class="small text-muted mt-2 mb-0">
-		                          <span>
-		                            <i class="mdi mdi-star mr-1"></i>4
-		                          </span>
-		                          <span class="ml-2">
-		                            <i class="mdi mdi-comment mr-1"></i>11
-		                          </span>
-		                          <span class="ml-2">
-		                            <i class="mdi mdi-reply"></i>
-		                          </span>
-		                        </p>
-		                      </div>
-		                    </div>
+											 {{/each}}
+
+
+
 		                  </div>
 		                </div>
 		              </div>

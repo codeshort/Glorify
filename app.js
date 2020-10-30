@@ -37,12 +37,13 @@ app.set('view engine','hbs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(indexRouter);
-app.use(usersRouter);
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(indexRouter);
+app.use(usersRouter);
+
 app.get('/',(req,res)=>{
 
   res.render(path.join(__dirname+'/../public/Sign/signup-signin'));

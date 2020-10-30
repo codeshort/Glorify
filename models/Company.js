@@ -31,7 +31,8 @@ posts:[{
 admin:[{
   type:mongoose.Schema.Types.ObjectID
 }],
-members:[{
+members:[
+    {
       userID:{
       type:  mongoose.Schema.Types.ObjectID
     },

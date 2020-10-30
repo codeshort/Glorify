@@ -102,7 +102,20 @@ const upload =multer({
   router.use(express.static(path.join(__dirname, '/../public')));
 
 router.get('/post',auth,async (req,res)=>{
-  res.sendFile(path.join(__dirname,'/../public/posttest.html'))
+
+  Company.findOne({companyName:req.user.company},(err,compny)=>{
+    var c=compny.posts;
+    for( i=0;i<c.length;i++)
+  {  c[i].image   = new Buffer(c[i].image).toString('base64');
+  
+  }
+    res.render(path.join(__dirname,'/../public/posts-page/posts'),{
+      feed:c,
+
+    })
+
+    })
+
 })
 //making posts
 
