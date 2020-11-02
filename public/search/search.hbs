@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="s130">
+        <form action="/search" method="GET" >
+        <div class="inner-form">
+          <div class="input-field first-wrap">
+
+            <input id="search" type="text"  name="searched_user" placeholder="  Whom are you looking for?" />
+          </div>
+          <div class="input-field second-wrap">
+            <input  class="btn-search" style="background-color:blue;" type="submit">SEARCH</button>
+          </div>
+        </div>
+      </form>
+  </div>
+
+
+
+
+
+<div class="container">
+ <div class="row">
+     {{#each member}}
+ <div class="col-md-4">
+         <div class="well well-sm">
+             <div class="media">
+                 <a class="thumbnail pull-left" href="#">
+                     <img class="media-object"  width="40" src="https://i.pinimg.com/originals/d4/96/91/d496918c7f6571933812ed319be41717.jpg">
+                 </a>
+                 <div class="media-body">
+                
+                    <a href="/profile/{{this.userID}}"> <h4 class="media-heading">{{this.name}}</h4></a>
+                 <p><span class="label label-info"></span> <span class="label label-primary" style="background-color:orange">Reward Basket : {{this.rewardBasket}}</span> <span class="label label-info"></span> <span class="label label-primary">Giveaway Basket : {{this.giveawayBasket}}</span></p>
+
+                     <p>
+                         <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-comment"></span> Message</a>
+                         <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-heart"></span> Favorite</a>
+                         <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ban-circle"></span> Unfollow</a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+     </div>
+{{/each}}
+
+</div>
+</div>
+
+    <script src="js/extention/choices.js"></script>
+  </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

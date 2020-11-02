@@ -36,6 +36,9 @@ members:[
       userID:{
       type:  mongoose.Schema.Types.ObjectID
     },
+    name:{
+      type:String
+    },
     rewardBasket:{
       type:Number
     },
