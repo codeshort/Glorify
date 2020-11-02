@@ -55,15 +55,6 @@ app.get('/main_page',(req,res)=>{
 })
 
 
-
-
-// app.get('/login',(req,res)=>{
-// res.sendFile(__dirname+'/public/Sign/signup-signin.html');
-// })
-// app.post('/login',(req,res)=>{
-// console.log('Redirected')
-// //  res.sendFile('/public/signup-signin.html');
-// })
 app.get('/company',(req,res)=>{
   res.render(__dirname+'/public/host-join_company_pages/companysignup')
 })
@@ -165,25 +156,6 @@ app.post('/post/done',auth,(req,res)=>{
   }
 })
 
-//
-// app.use(function (req, res, next) {
-//
-//     // Website you wish to allow to connect
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//
-//     // Request methods you wish to allow
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//
-//     // Request headers you wish to allow
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//
-//     // Set to true if you need the website to include cookies in the requests sent
-//     // to the API (e.g. in case you use sessions)
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//
-//     // Pass to next layer of middleware
-//     next();
-// });
 
 app.get('/join',(req,res)=>{
   res.render(path.join(__dirname+'/public/host-join_company_pages/companyjoin'))
@@ -241,26 +213,23 @@ catch(e)
 })
 
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.get('/search',auth,async (req,res)=>{
+  console.log(req.query.searched_user)
+  const compny=await Company.findOne({companyName:req.user.company})
+  var mem= compny.members;
+  console.log(mem)
+  if(req.query.searched_user)
+  {
+    mem=mem.filter((m)=>{
+      return m.name===req.query.searched_user
+      // console.log("s",m.name,"s","s",req.query.searched_user,"s")
+    })
+  }
+  console.log(mem)
+  res.render(path.join(__dirname+'/public/search/search'),{member:mem })
+})
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
 
-// error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-//
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
-//
-//
 app.listen(3000, ()=>{
   console.log('server is up on 3000')
 });
