@@ -23,7 +23,7 @@ router.post('/',(req,res)=>{
    user = new User({
     Username:req.body.Username,
     email:req.body.email,
-    password:hash
+    password:req.body.password
   })
   console.log(user)
   user.save().then(()=>{

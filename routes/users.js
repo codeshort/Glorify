@@ -107,16 +107,24 @@ router.get('/post',auth,async (req,res)=>{
     var c=compny.posts;
     for( i=0;i<c.length;i++)
   {  c[i].image   = new Buffer(c[i].image).toString('base64');
-  
+
+  }
+  var sort_list = compny.members;
+  sort_list.sort((a, b) => (a.rewardBasket < b.rewardBasket) ? 1 : -1);
+  sort_list= sort_list.slice(0,10);
+  for(i=0;i<sort_list.length;i++)
+  {
+    console.log(sort_list[i]);
   }
     res.render(path.join(__dirname,'/../public/posts-page/posts'),{
       feed:c,
-
-    })
-
-    })
-
-})
+      companyName : compny.companyName,
+      description:compny.description,
+      location: compny.location,
+      members: sort_list
+    });
+  });
+});
 //making posts
 
 router.post('/post',auth, upload.single('image') ,async(req,res)=>{
