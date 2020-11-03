@@ -41,7 +41,7 @@
   letter-spacing: 2px;
 }
 .timeline ul li div div {
-  height: 100px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;

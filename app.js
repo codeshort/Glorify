@@ -100,22 +100,27 @@ app.post('/company',auth,async(req,res)=>{
 
 
 app.get('/profile',auth,(req,res)=>{
+  var todo_rev = req.user.todo;
+  todo_rev.reverse();
+  var working_rev = req.user.working
+  working_rev.reverse();
+  var done_rev = req.user.done
+  done_rev.reverse();
   res.render(__dirname+'/public/profile_page/profile',{
-    todo: req.user.todo,
-    working:req.user.working,
-    done: req.user.done
+    todo: todo_rev,
+    working:working_rev,
+    done:done_rev
   });
 })
 app.post('/profile',auth,async(req,res) =>{
-
-
-
-
 });
-app.post('/post/add',auth,(req,res)=>{
+app.post('/post/add',auth,async(req,res)=>{
   try{
-    req.user.todo.push(req.body.name)
-    req.user.save().then(() => {
+  await req.user.todo.push({work:req.body.name,
+    assigned_by:req.user._id,
+    assigned_by_name: req.user.Username
+     });
+    await req.user.save().then(() => {
       console.log('Added to do database ')
     })
       res.redirect('/profile')
@@ -126,13 +131,31 @@ app.post('/post/add',auth,(req,res)=>{
 
 })
 //**************************************************************************************************************************//
-app.post('/post/working',auth,(req,res)=>{
+app.post('/post/working',auth,async(req,res)=>{
   try{
-    req.user.working.push(req.body.name)
-    req.user.save().then(() =>
+    if(req.query.initial){
+      if(req.query.initial=="todo")
+      {
+          console.log(req.query.initial, "&&&&&&&&&&&&" ,req.query.obj)
+          var added=  await req.user.todo.find(el => el._id == req.query.obj);
+          console.log("#########:" , req.user.todo,added);
+          req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
+          await req.user.working.push(added);
+          console.log(req.user.todo);
+      }
+      else if(req.query.initial=="done")
+      {
+
+      }
+
+    }
+  else {
+    await req.user.working.push(req.body.name)
+    }
+  await req.user.save().then(() =>
     {
       console.log('Added to working database ')
-    })
+    });
     res.redirect('/profile')
   }
   catch(e)
@@ -211,7 +234,6 @@ catch(e)
   console.log(e)
 }
 })
-
 
 app.get('/search',auth,async (req,res)=>{
   console.log(req.query.searched_user)

@@ -46,13 +46,37 @@ isAdmin:{
   type:Boolean
 },
 todo:[{
-  type: String
+   work:{
+     type:String
+   },
+   assigned_by:{
+     type:mongoose.Schema.Types.ObjectID
+   },
+   assigned_by_name:{
+     type:String
+   }
 }],
 working:[{
-  type: String
+  work:{
+    type:String
+  },
+  assigned_by:{
+    type:mongoose.Schema.Types.ObjectID
+  },
+  assigned_by_name:{
+    type:String
+  }
 }],
 done:[{
-  type: String
+  work:{
+    type:String
+  },
+  assigned_by:{
+    type:mongoose.Schema.Types.ObjectID
+  },
+  assigned_by_name:{
+    type:String
+  }
 }]
 })
 

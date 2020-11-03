@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="/profile_page/button_style.css">
     <link rel="stylesheet" href="/profile_page/profile.css">
       <link rel="stylesheet" href="/profile_page/profile_1.css">
       <link rel="stylesheet" type="text/css" href="/profile_page/style.css"/>
@@ -145,7 +146,7 @@
          <h1>Project Updates</h1>
          <form action="post/add" method="post">
            <label id="icon" for="name"><i class="far fa-edit"></i></label>
-           <input type="text" name="name" id="name" placeholder="ToDo" />
+           <input type="text" name="name" id="name" placeholder="ToDo" maxlength="100"/>
            <div class="btn-block">
              <button type="submit" href="/" id ="create">Create</button>
            </div>
@@ -154,7 +155,7 @@
 
 </div>
  <br/>
-<div style"width:1000px;float:right">
+<div style"width:1000px;float:right;">
   <section class="timeline">
     <ul>
       {{#each todo}}
@@ -162,13 +163,19 @@
         <div>
           <time>25/10</time>
           <div class="discovery">
-            <h4>Task</h4>
             <p>
              BY:- Boss
             </p>
+          <p>
+          <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
+        <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+           </p>
           </div>
           <div class="scientist">
-            <h4>  {{this}} </h4>
+            <p><b>{{this.work}}</b></p>
+            <p>
+          <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+          </p>
           </div>
         </div>
       </li>
@@ -211,13 +218,19 @@
                            <div>
                              <time>25/10</time>
                              <div class="discovery">
-                               <h4>Task</h4>
                                <p>
                                 BY:- Boss
                                </p>
+                             <p>
+                             <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
+                           <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+                              </p>
                              </div>
                              <div class="scientist">
-                               <h4>  {{this}} </h4>
+                               <p><b>{{this.work}}</b></p>
+                               <p>
+                             <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+                             </p>
                              </div>
                            </div>
                          </li>
@@ -261,13 +274,19 @@
                            <div>
                              <time>25/10</time>
                              <div class="discovery">
-                               <h4>Task</h4>
                                <p>
                                 BY:- Boss
                                </p>
+                             <p>
+                             <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
+                           <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+                              </p>
                              </div>
                              <div class="scientist">
-                               <h4>  {{this}} </h4>
+                               <p><b>{{this.work}}</b></p>
+                               <p>
+                             <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+                             </p>
                              </div>
                            </div>
                          </li>
