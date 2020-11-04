@@ -132,7 +132,24 @@ compny.members.forEach((usr)=>
 compny.save().then(()=>{
   console.log(compny)
 })
-
+User.findOne({_id:req.user._id},(err,usr)=>{
+  var obj1 = {
+    rewardBaset:
+  }
+  usr.Total_rewards_given = usr.Total_rewards_given
+  usr.Total_badges_given = usr.Total_badges_given
+    
+    
+})
+ User.findOne({_id:req.params.id},(err,usr)=>{
+  
+  
+  
+}) 
+  
+  
+  
+  
 })
 
 
