@@ -115,6 +115,72 @@ app.get('/profile',auth,(req,res)=>{
 })
 app.post('/profile',auth,async(req,res) =>{
 });
+router.get('/reward/:id,auth,(req,res)=>{
+Company.findOne({companyName:req.user.company},(err,compny)=>{
+   compny.members.forEach((usr)=>
+if(usr._id === req.params.id){
+usr.rewardBasket = usr.rewardBasket + req.body. ;
+usr.badgesBasket = usr.badgesBaskte + req.body.     
+})
+compny.members.forEach((usr)=>
+  if(usr._id === req.user._id){
+    usr.giveawayBasket = usr.giveawayBasket - req.body. ;
+    usr.giveBadgeBasket = usr.giveBadgeBasket - req.body. 
+  }
+  
+)
+compny.save().then(()=>{
+  console.log(compny)
+})
+User.findOne({_id:req.user._id},(err,usr)=>{
+  var obj1 = {
+    rewards_given:req.body.   ,
+    rewards_given_to:req.body. 
+  }
+  giveawayBasket.push(obj1)
+  var obj2 = {
+    badges_given:req.body. ,
+    badges_given_to: req.body.  
+  }
+  giveBadgeBasket.push(obj2)
+  usr.Total_rewards_given = usr.Total_rewards_given - req.body. 
+  usr.Total_badges_given = usr.Total_badges_given - req.body.
+    usr.save().then(()=>{
+    console.log(usr)
+    })
+    
+})
+ User.findOne({_id:req.params.id},(err,usr)=>{
+   var obj1 = {
+    rewards_received:req.body.   ,
+    rewards_given_by:req.body. 
+  }
+  giveawayBasket.push(obj1)
+  var obj2 = {
+    badges_received:req.body. ,
+    badges_given_by: req.body.  
+  }
+  giveBadgeBasket.push(obj2)
+  usr.Total_rewards_recieved = usr.Total_rewards_received  +  req.body.
+  usr.Total_badges_received = usr.Total_badges_received + req.body.
+    usr.save().then(()=>{
+    console.log(usr)
+    })
+  
+  
+}) 
+  
+  
+  
+  
+})
+
+
+
+
+
+
+
 app.post('/post/add',auth,async(req,res)=>{
   try{
     if(req.query.initial)

@@ -77,7 +77,55 @@ done:[{
   assigned_by_name:{
     type:String
   }
-}]
+}],
+rewardBasket:[{
+  rewards_received:{
+    type:Number
+  },
+  rewards_given_by:{
+    type:mongoose.Schema.Types.ObjectID
+  }
+}],
+giveawayBasket:[{
+  rewards_given:{
+    type:Number
+  },
+  rewards_given_to:{
+    type:mongoose.Schema.Types.ObjectID
+  }
+}],
+badgesBasket:[{
+  badges_received:{
+    type:Number
+  },
+  badges_given_by:{
+    type:mongoose.Schema.Types.ObjectID
+  }
+}],
+givebadgeBasket:[{
+  badges_given:{
+    type:Number
+  },
+  badges_given_to:{
+    type:mongoose.Schema.Types.ObjectID
+  }
+}],
+Total_rewards_received:{
+  type:Number,
+  default:0
+},
+Total_rewards_given:{
+  type:Number,
+  default:0
+},
+Total_badges_received:{
+  type:Number,
+  default:0
+},
+Total_badges_given:{
+  type:Number,
+  default:0
+}
 })
 
 
