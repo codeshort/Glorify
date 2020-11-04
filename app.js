@@ -134,7 +134,7 @@ compny.save().then(()=>{
 })
 User.findOne({_id:req.user._id},(err,usr)=>{
   var obj1 = {
-    rewardBaset:
+    
   }
   usr.Total_rewards_given = usr.Total_rewards_given
   usr.Total_badges_given = usr.Total_badges_given
