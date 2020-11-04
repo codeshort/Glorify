@@ -164,17 +164,17 @@
           <time>25/10</time>
           <div class="discovery">
             <p>
-             BY:- Boss
+              <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
             </p>
           <p>
           <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
-        <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+        <form method="post" action="/post/done?initial=todo&obj={{this._id}}"><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
            </p>
           </div>
           <div class="scientist">
             <p><b>{{this.work}}</b></p>
             <p>
-          <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+           <form method="post" action ="/post/add?initial=todo&obj={{this._id}}"><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
           </p>
           </div>
         </div>
@@ -219,17 +219,18 @@
                              <time>25/10</time>
                              <div class="discovery">
                                <p>
-                                BY:- Boss
+                                  <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
                                </p>
                              <p>
-                             <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
-                           <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
-                              </p>
+
+                           <form method="post" action="/post/done?initial=working&obj={{this._id}}"><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+                            <form  method="post" action="/post/add?initial=working&obj={{this._id}}"><h4><button title="Push to To Do" style="padding:0px; margin: 0px;"><i class="fa fa-edit" style="color:purple"></i></button></h4> </form>
+                            </p>
                              </div>
                              <div class="scientist">
                                <p><b>{{this.work}}</b></p>
                                <p>
-                             <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+                            <form method="post" action="/post/working?initial=working&obj={{this._id}}"><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
                              </p>
                              </div>
                            </div>
@@ -275,17 +276,18 @@
                              <time>25/10</time>
                              <div class="discovery">
                                <p>
-                                BY:- Boss
+                                <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
                                </p>
                              <p>
-                             <form  method="post" action="/post/working?initial=todo&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
-                           <form><h4><button title="Push to Done" style="padding:0px; margin: 0px;"><i class="fa fa-check-circle" aria-hidden="true" style="color: green "></i></i></button></h4></form>
+                             <form  method="post" action="/post/working?initial=done&obj={{this._id}}"><h4><button title="Push to Working" style="padding:0px; margin: 0px;"><i class="fa fa-briefcase" aria-hidden="true" style="color: orange"></i></button></h4> </form>
+                           <form method="post" action="/post/add?initial=done&obj={{this._id}}"><h4><button title="Push to To Do" style="padding:0px; margin: 0px;"><i class="fa fa-edit" style="color:purple"></i></button></h4></form>
                               </p>
                              </div>
                              <div class="scientist">
                                <p><b>{{this.work}}</b></p>
                                <p>
-                             <form><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+                             <form method="post" action="/post/done?initial=done&obj={{this._id}}"><button title="Delete" style="padding:0px; margin: 0px;"><i class="fa fa-trash" aria-hidden="true" style="color: red"></i></button></form>
+                             <form method="post" action="/post/sendmail?obj={{this._id}}"><button title="Notify Work Done" style="padding:0px; margin: 0px;"><i class="fas fa-envelope" style="color:blue"></i></button></form>
                              </p>
                              </div>
                            </div>

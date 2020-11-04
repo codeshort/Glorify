@@ -16,6 +16,7 @@ var comp;
 const User = require('./models/User')
 const Company = require('./models/Company')
 const auth = require('./middleware/auth.js')
+const {workdone}= require('./email/email.js');
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');
@@ -116,13 +117,35 @@ app.post('/profile',auth,async(req,res) =>{
 });
 app.post('/post/add',auth,async(req,res)=>{
   try{
-  await req.user.todo.push({work:req.body.name,
-    assigned_by:req.user._id,
-    assigned_by_name: req.user.Username
-     });
+    if(req.query.initial)
+    {
+      if(req.query.initial=="todo")
+      {
+        req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
+      }
+      else if(req.query.initial=="working")
+      {
+        var added=  await req.user.working.find(el => el._id == req.query.obj);
+        req.user.working= await req.user.working.filter(el => el._id!= req.query.obj);
+        await req.user.todo.push(added);
+      }
+      else if(req.query.initial=="done")
+      {
+        var added=  await req.user.done.find(el => el._id == req.query.obj);
+        req.user.done= await req.user.done.filter(el => el._id!= req.query.obj);
+        await req.user.todo.push(added);
+      }
+    }
+    else {
+         await req.user.todo.push({work:req.body.name,
+                assigned_by:req.user._id,
+               assigned_by_name: req.user.Username
+         });
+    }
+
     await req.user.save().then(() => {
       console.log('Added to do database ')
-    })
+    });
       res.redirect('/profile')
   }
   catch(e){
@@ -130,28 +153,39 @@ app.post('/post/add',auth,async(req,res)=>{
   }
 
 })
-//**************************************************************************************************************************//
+//**************************************************************************************************************************
 app.post('/post/working',auth,async(req,res)=>{
   try{
     if(req.query.initial){
       if(req.query.initial=="todo")
       {
-          console.log(req.query.initial, "&&&&&&&&&&&&" ,req.query.obj)
+
           var added=  await req.user.todo.find(el => el._id == req.query.obj);
-          console.log("#########:" , req.user.todo,added);
+          //console.log("#########:" , req.user.todo,added);
           req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
           await req.user.working.push(added);
-          console.log(req.user.todo);
+          //console.log(req.user.todo);
+      }
+      else if(req.query.initial=="working")
+      {
+        req.user.working= await req.user.working.filter(el => el._id!= req.query.obj);
       }
       else if(req.query.initial=="done")
       {
-
+        var added=  await req.user.done.find(el => el._id == req.query.obj);
+        req.user.done= await req.user.done.filter(el => el._id!= req.query.obj);
+        await req.user.working.push(added);
       }
-
     }
   else {
-    await req.user.working.push(req.body.name)
+    console.log("working console" ,req.body);
+    await req.user.working.push({work:req.body.name,
+           assigned_by:req.user._id,
+          assigned_by_name: req.user.Username
+    })
+
     }
+
   await req.user.save().then(() =>
     {
       console.log('Added to working database ')
@@ -164,9 +198,34 @@ app.post('/post/working',auth,async(req,res)=>{
   }
 })
 
-app.post('/post/done',auth,(req,res)=>{
+app.post('/post/done',auth,async(req,res)=>{
   try{
-    req.user.done.push(req.body.name)
+    if(req.query.initial)
+    {
+       if(req.query.initial == "todo")
+       {
+        var added=  await req.user.todo.find(el => el._id == req.query.obj);
+        req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
+        await req.user.done.push(added);
+       }
+       else if(req.query.initial == "working")
+       {
+         var added=  await req.user.working.find(el => el._id == req.query.obj);
+         req.user.working= await req.user.working.filter(el => el._id!= req.query.obj);
+         await req.user.done.push(added);
+       }
+
+       else if(req.query.initial=="done")
+       {
+          req.user.done= await req.user.working.filter(el => el._id!= req.query.obj);
+       }
+    }
+    else {
+             req.user.done.push({work:req.body.name,
+                    assigned_by:req.user._id,
+                   assigned_by_name: req.user.Username
+             })
+        }
     req.user.save().then(() =>
     {
       console.log('Added to done database ')
@@ -250,6 +309,29 @@ app.get('/search',auth,async (req,res)=>{
   console.log(mem)
   res.render(path.join(__dirname+'/public/search/search'),{member:mem })
 })
+
+
+
+
+// send grid work ************************************************
+app.post('/post/sendmail',auth,async (req,res)=>{
+  try{
+
+
+    var work= await req.user.done.find(el => el._id== req.query.obj);
+   const user =await User.findOne({_id:work.assigned_by})
+
+
+      workdone(user.email,work.work,req.user.Username)
+      res.redirect('/profile')
+  }
+  catch(e)
+  {
+    console.log('done-error',e);
+  }
+})
+
+
 
 
 app.listen(3000, ()=>{
