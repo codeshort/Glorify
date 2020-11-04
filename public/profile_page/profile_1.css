@@ -35,7 +35,7 @@ div, h1, form, input, p {
      margin: 15px 0;
      }
      input[type=radio] {
-     display: none;
+     /*display: none;*/
      }
      label#icon {
      margin: 0;

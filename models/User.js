@@ -114,7 +114,7 @@ Total_rewards_received:{
   type:Number,
   default:0
 },
-Total_rewards_given:{
+Total_giveaway_rewards_left:{
   type:Number,
   default:0
 },
@@ -122,7 +122,7 @@ Total_badges_received:{
   type:Number,
   default:0
 },
-Total_badges_given:{
+Total_giveaway_badges_left:{
   type:Number,
   default:0
 }
