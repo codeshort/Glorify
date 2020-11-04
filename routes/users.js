@@ -70,8 +70,8 @@ router.get('/logout',auth ,async(req,res)=>{
   }
 })
 
-router.get('/after_login',(req,res)=>{
-  res.render(path.join(__dirname+'/../public/Main_page0/After_login'));
+router.get('/after_login',auth,(req,res)=>{
+  res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{user:req.user});
 })
 
 

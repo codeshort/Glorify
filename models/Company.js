@@ -44,6 +44,12 @@ members:[
     },
     giveawayBasket:{
       type:Number
+    },
+    badgesBasket:{
+      type:Number
+    },
+    giveBadgeBasket:{
+      type:Number
     }
 
 }],
