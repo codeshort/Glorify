@@ -45,6 +45,10 @@ isInCompany:{
 isAdmin:{
   type:Boolean
 },
+hierarchy:{
+  type:Number,
+  default:0
+},
 todo:[{
    work:{
      type:String
@@ -78,51 +82,72 @@ done:[{
     type:String
   }
 }],
-rewardBasket:[{
-  rewards_received:{
+// rewardBasket:[{
+//   rewards_received:{
+//     type:Number
+//   },
+//   rewards_given_by:{
+//     type:mongoose.Schema.Types.ObjectID
+//   }
+// }],
+// giveawayBasket:[{
+//   rewards_given:{
+//     type:Number
+//   },
+//   rewards_given_to:{
+//     type:mongoose.Schema.Types.ObjectID
+//   }
+// }],
+badgesBasket:{
+  badge1:{
     type:Number
+    ,default:0
+
   },
-  rewards_given_by:{
-    type:mongoose.Schema.Types.ObjectID
-  }
-}],
-giveawayBasket:[{
-  rewards_given:{
+  badge2:{
     type:Number
+    ,default:0
+
   },
-  rewards_given_to:{
-    type:mongoose.Schema.Types.ObjectID
-  }
-}],
-badgesBasket:[{
-  badges_received:{
+  badge3:{
     type:Number
+    ,default:0
+
   },
-  badges_given_by:{
-    type:mongoose.Schema.Types.ObjectID
-  }
-}],
-givebadgeBasket:[{
-  badges_given:{
+  badge4:{
     type:Number
+    ,default:0
+
   },
-  badges_given_to:{
-    type:mongoose.Schema.Types.ObjectID
-  }
-}],
+
+},
+givebadgeBasket:{
+  badge1:{
+    type:Number,
+    default:0
+
+  },
+  badge2:{
+    type:Number
+    ,default:0
+
+  },
+  badge3:{
+    type:Number
+    ,default:0
+
+  },
+  badge4:{
+    type:Number
+    ,default:0
+
+  },
+},
 Total_rewards_received:{
   type:Number,
   default:0
 },
 Total_giveaway_rewards_left:{
-  type:Number,
-  default:0
-},
-Total_badges_received:{
-  type:Number,
-  default:0
-},
-Total_giveaway_badges_left:{
   type:Number,
   default:0
 }

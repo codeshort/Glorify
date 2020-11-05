@@ -46,11 +46,50 @@ members:[
       type:Number
     },
     badgesBasket:{
-      type:Number
+      badge1:{
+        type:Number
+        ,default:0
+    
+      },
+      badge2:{
+        type:Number
+        ,default:0
+
+      },
+      badge3:{
+        type:Number
+        ,default:0
+
+      },
+      badge4:{
+        type:Number
+        ,default:0
+
+      },
+
     },
-    giveBadgeBasket:{
-      type:Number
-    }
+    givebadgeBasket:{
+      badge1:{
+        type:Number,
+        default:0
+
+      },
+      badge2:{
+        type:Number
+        ,default:0
+
+      },
+      badge3:{
+        type:Number
+        ,default:0
+
+      },
+      badge4:{
+        type:Number
+        ,default:0
+
+      },
+    },
 
 }],
 location:{
