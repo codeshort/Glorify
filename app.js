@@ -123,22 +123,25 @@ console.log(usr)
     working:working_rev,
     done:done_rev,
     usrid:req.params.id,
+    Username:usr.Username,
+    rewardBasket:usr.Total_rewards_received,
+    giveawayBasket:usr.Total_giveaway_rewards_left,
+    badgesBasket:usr.badgesBasket,
+    givebadgeBasket:usr.givebadgeBasket,
   });
 
 })
-
 //in progress
 app.get('/reward',auth,async (req,res)=>{
 
   var profileuser=await User.findById(req.query.usrid)
-  if(profileuser.hierarchy<req.user.hierarchy)
-  {
+  if(profileuser.hierarchy>req.user.hierarchy)
+  {console.log("Dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
     console.log(profileuser.hierarchy);
-    console.log(req.user.hierachy);
-    res.status(400).send();
+    console.log(req.user.hierarchy);
+  return   res.status(400).redirect(`/profile/${req.query.usrid}`)
   }
 
-  console.log(profileuser,req.user)
 
   if(profileuser.company===req.user.company)
   {
@@ -146,7 +149,7 @@ app.get('/reward',auth,async (req,res)=>{
     {
       if(  req.user.Total_giveaway_rewards_left< parseInt(req.query.credits))
       {
-        res.status(400).send;
+      return   res.status(400).redirect(`/profile/${req.query.usrid}`)
       }
     profileuser.Total_rewards_received+= parseInt(req.query.credits);
     req.user.Total_giveaway_rewards_left-= parseInt(req.query.credits);
@@ -155,8 +158,8 @@ app.get('/reward',auth,async (req,res)=>{
     {
 
       var b=req.query.badge
-      if(  req.user.givebadgeBasket['badge'+b]>0){
-        res.status(400).send;
+      if(  req.user.givebadgeBasket['badge'+b]<=0){
+      return   res.status(400).redirect(`/profile/${req.query.usrid}`)
       }
       if(b==='1')
     {  profileuser.badgesBasket['badge1']+=1;
@@ -173,16 +176,13 @@ app.get('/reward',auth,async (req,res)=>{
     }
 
     profileuser.save().then(()=>{
-    console.log(profileuser)
     })
     req.user.save().then(()=>{
-    console.log(req.user)
     })
 
       var cmp=await Company.findOne({companyName:req.user.company})
       //console.log(cmp,"cmpppppppppp")
       var ind=cmp.members.findIndex(el=>el.userID==req.user.id)
-      console.log(ind,"DDddddddddddddddd")
       cmp.members[ind].badgesBasket=req.user.badgesBasket;
 
       cmp.members[ind].givebadgeBasket=req.user.givebadgeBasket;
@@ -206,6 +206,9 @@ app.get('/reward',auth,async (req,res)=>{
 
 }
 })
+
+
+
 
 
 
