@@ -15,10 +15,16 @@ router.get('/',(req,res)=>{
 
   res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
-router.post('/',(req,res)=>{
- bcrypt.hash(req.body.password,10,(err,hash)=>{
-   if(err){
-     return console.log('Password can not be encrpted')
+
+
+router.post('/',async (req,res)=>{
+
+   var u= await User.findOne({email:req.body.email});
+   if(u)
+   {
+     return res.render(path.join(__dirname+'/../public/Sign/signup-signin'),{
+       signupmsg:"Email already exists",
+     })
    }
    user = new User({
     Username:req.body.Username,
@@ -31,7 +37,7 @@ router.post('/',(req,res)=>{
     console.log(user)
   })
 
- })
+
 res.redirect('/login')
 })
 

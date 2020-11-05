@@ -23,37 +23,26 @@ router.get('/login',async (req,res)=>{
 router.post('/login',async (req,res)=>{
   try{
 
-    console.log("reached",req.body.password);
-    bcrypt.hash(req.body.password,10,(err,hash)=>{
-    if(err){
-        console.log('Password can not be encrypted')
-    }
-      console.log(req.body.email,req.body.password);
-      console.log(User,"gghhjh");
+       User.findOne({"email":req.body.email,"password":req.body.password},'Username email password',   async (err, usr)=> {
 
- User.findOne({"email":req.body.email,"password":req.body.password},'Username email password',   async (err, usr)=> {
-  if (err) {
-    console.log(err);
-    return
-  }
+        if (!usr) {
+          return res.render(path.join(__dirname+'/../public/Sign/signup-signin'),{
+            loginmsg:"Email or password incorrect!"
+          })
+        }
 
-    console.log(hash,usr)
-     console.log(usr.Username)
-     const token =await  usr.generateAuthToken()
-    console.log("cookie")
-  //  console.log(req.cookies);
-  console.log(token);
-    res.cookie('jwt',token, {maxAge: 3600000 })
-    console.log(req.cookies);
-    console.log("cookie");
-    res.redirect('/after_login');
-})
-});
-}
-  catch(e){
+           const token =await  usr.generateAuthToken()
+        //  console.log(req.cookies);
+          res.cookie('jwt',token, {maxAge: 3600000 })
+          res.redirect('/after_login');
+      })
+
+
+  }catch(e){
       res.status(400).send()
   }
 })
+
 
 router.get('/logout',auth ,async(req,res)=>{
   try {
