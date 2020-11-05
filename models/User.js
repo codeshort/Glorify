@@ -150,7 +150,10 @@ Total_rewards_received:{
 Total_giveaway_rewards_left:{
   type:Number,
   default:0
-}
+    },
+    liked_posts: [{
+        type:mongoose.Schema.Types.ObjectID
+    }]
 })
 
 
