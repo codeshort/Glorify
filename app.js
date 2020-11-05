@@ -99,90 +99,108 @@ app.post('/company',auth,async(req,res)=>{
 })
 // Profile page routing!!
 
-
+//
 app.get('/profile',auth,(req,res)=>{
-  var todo_rev = req.user.todo;
+  res.redirect(`/profile/${req.user._id}`)
+
+})
+//
+app.get('/profile/:id',auth,async (req,res)=>
+{
+  console.log(req.params.id)
+  var usr=await User.findById(req.params.id)
+
+console.log(usr)
+  var todo_rev = usr.todo;
   todo_rev.reverse();
-  var working_rev = req.user.working
+  var working_rev =usr.working
   working_rev.reverse();
-  var done_rev = req.user.done
+  var done_rev = usr.done
   done_rev.reverse();
+  console.log(todo_rev,working_rev,done_rev,req.params.id)
   res.render(__dirname+'/public/profile_page/profile',{
     todo: todo_rev,
     working:working_rev,
-    done:done_rev
+    done:done_rev,
+    usrid:req.params.id,
   });
-})
-app.post('/profile',auth,async(req,res) =>{
-});
-router.get('/reward/:id,auth,(req,res)=>{
-Company.findOne({companyName:req.user.company},(err,compny)=>{
-   compny.members.forEach((usr)=>
-if(usr._id === req.params.id){
-usr.rewardBasket = usr.rewardBasket + req.body. ;
-usr.badgesBasket = usr.badgesBaskte + req.body.     
-})
-compny.members.forEach((usr)=>
-  if(usr._id === req.user._id){
-    usr.giveawayBasket = usr.giveawayBasket - req.body. ;
-    usr.giveBadgeBasket = usr.giveBadgeBasket - req.body. 
-  }
-  
-)
-compny.save().then(()=>{
-  console.log(compny)
-})
-User.findOne({_id:req.user._id},(err,usr)=>{
-  var obj1 = {
-    rewards_given:req.body.   ,
-    rewards_given_to:req.body. 
-  }
-  giveawayBasket.push(obj1)
-  var obj2 = {
-    badges_given:req.body. ,
-    badges_given_to: req.body.  
-  }
-  giveBadgeBasket.push(obj2)
-  usr.Total_rewards_given = usr.Total_rewards_given - req.body. 
-  usr.Total_badges_given = usr.Total_badges_given - req.body.
-    usr.save().then(()=>{
-    console.log(usr)
-    })
-    
-})
- User.findOne({_id:req.params.id},(err,usr)=>{
-   var obj1 = {
-    rewards_received:req.body.   ,
-    rewards_given_by:req.body. 
-  }
-  giveawayBasket.push(obj1)
-  var obj2 = {
-    badges_received:req.body. ,
-    badges_given_by: req.body.  
-  }
-  giveBadgeBasket.push(obj2)
-  usr.Total_rewards_recieved = usr.Total_rewards_received  +  req.body.
-  usr.Total_badges_received = usr.Total_badges_received + req.body.
-    usr.save().then(()=>{
-    console.log(usr)
-    })
-  
-  
-}) 
-  
-  
-  
-  
+
 })
 
+//in progress 
+// app.get('/reward',auth,(req,res)=>{
+//   var profileuser=await User.findById(req.query.usrid)
+//   if(profileuser.company===req.user.company)
+//   {
+//     profileuser.Total_rewards_received+=req.body.reward;
+//     req.user.Total_giveaway_rewards_left-=req.body.reward;
+//
+//
+//   }
+// Company.findOne({companyName:req.user.company},(err,compny)=>{
+//    compny.members.forEach((usr)=>{
+// if(usr._id === req.params.id){
+// usr.rewardBasket = usr.rewardBasket + req.body. ;
+// usr.badgesBasket = usr.badgesBaskte + req.body.
+// })
+// compny.members.forEach((usr)=>
+//   if(usr._id === req.user._id){
+//     usr.giveawayBasket = usr.giveawayBasket - req.body. ;
+//     usr.giveBadgeBasket = usr.giveBadgeBasket - req.body.
+//   }
+//
+// )
+// compny.save().then(()=>{
+//   console.log(compny)
+// })
+// User.findOne({_id:req.user._id},(err,usr)=>{
+//   var obj1 = {
+//     rewards_given:req.body.   ,
+//     rewards_given_to:req.body.
+//   }
+//   giveawayBasket.push(obj1)
+//   var obj2 = {
+//     badges_given:req.body. ,
+//     badges_given_to: req.body.
+//   }
+//   giveBadgeBasket.push(obj2)
+//   usr.Total_rewards_given = usr.Total_rewards_given - req.body.
+//   usr.Total_badges_given = usr.Total_badges_given - req.body.
+//     usr.save().then(()=>{
+//     console.log(usr)
+//     })
+//
+// })
+//  User.findOne({_id:req.params.id},(err,usr)=>{
+//    var obj1 = {
+//     rewards_received:req.body.   ,
+//     rewards_given_by:req.body.
+//   }
+//   giveawayBasket.push(obj1)
+//   var obj2 = {
+//     badges_received:req.body. ,
+//     badges_given_by: req.body.
+//   }
+//   giveBadgeBasket.push(obj2)
+//   usr.Total_rewards_recieved = usr.Total_rewards_received  +  req.body.
+//   usr.Total_badges_received = usr.Total_badges_received + req.body.
+//     usr.save().then(()=>{
+//     console.log(usr)
+//     })
+//
+//
+// }) })
+//
 
 
 
 
 
 
-app.post('/post/add',auth,async(req,res)=>{
+app.post('/profile/post/add',auth,async(req,res)=>{
   try{
+    req.user=await User.findById(req.query.usrid)
+
     if(req.query.initial)
     {
       if(req.query.initial=="todo")
@@ -212,7 +230,7 @@ app.post('/post/add',auth,async(req,res)=>{
     await req.user.save().then(() => {
       console.log('Added to do database ')
     });
-      res.redirect('/profile')
+      res.redirect(`/profile/${req.query.usrid}`)
   }
   catch(e){
     console.log('Todo-error',e);
@@ -220,8 +238,10 @@ app.post('/post/add',auth,async(req,res)=>{
 
 })
 //**************************************************************************************************************************
-app.post('/post/working',auth,async(req,res)=>{
+app.post('/profile/post/working',auth,async(req,res)=>{
   try{
+    req.user=await User.findById(req.query.usrid)
+console.log(req.query.usrid,req.user)
     if(req.query.initial){
       if(req.query.initial=="todo")
       {
@@ -256,7 +276,7 @@ app.post('/post/working',auth,async(req,res)=>{
     {
       console.log('Added to working database ')
     });
-    res.redirect('/profile')
+    res.redirect(`/profile/${req.query.usrid}`)
   }
   catch(e)
   {
@@ -264,8 +284,10 @@ app.post('/post/working',auth,async(req,res)=>{
   }
 })
 
-app.post('/post/done',auth,async(req,res)=>{
+app.post('/profile/post/done',auth,async(req,res)=>{
   try{
+    req.user=await User.findById(req.query.usrid)
+
     if(req.query.initial)
     {
        if(req.query.initial == "todo")
@@ -283,7 +305,7 @@ app.post('/post/done',auth,async(req,res)=>{
 
        else if(req.query.initial=="done")
        {
-          req.user.done= await req.user.working.filter(el => el._id!= req.query.obj);
+          req.user.done= await req.user.done.filter(el => el._id!= req.query.obj);
        }
     }
     else {
@@ -296,7 +318,7 @@ app.post('/post/done',auth,async(req,res)=>{
     {
       console.log('Added to done database ')
     })
-      res.redirect('/profile')
+    res.redirect(`/profile/${req.query.usrid}`)
   }
   catch(e)
   {
@@ -380,7 +402,7 @@ app.get('/search',auth,async (req,res)=>{
 
 
 // send grid work ************************************************
-app.post('/post/sendmail',auth,async (req,res)=>{
+app.post('/profile/post/sendmail',auth,async (req,res)=>{
   try{
 
 
