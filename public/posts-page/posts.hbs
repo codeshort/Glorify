@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
@@ -59,75 +59,83 @@
  </main>
 		                  </div>
 		                </div>
-		                <div class="col-lg-8">
-		                  <div class="d-block d-md-flex justify-content-between mt-4 mt-md-0">
-		                    <div class="text-center mt-4 mt-md-0">
-		                      <button class="btn btn-outline-primary">Message</button>
-		                      <button class="btn btn-primary">Request</button>
-		                    </div>
-		                  </div>
-		                  <div class="mt-4 py-2 border-top border-bottom">
-		                    <ul class="nav profile-navbar">
-		                      <li class="nav-item">
-		                        <a class="nav-link" href="#">
-		                          <i class="mdi mdi-account-outline"></i>
-		                          Info
-		                        </a>
-		                      </li>
-		                      <li class="nav-item">
-		                        <a class="nav-link active" href="#">
-		                          <i class="mdi mdi-newspaper"></i>
-		                          Feed
-		                        </a>
-		                      </li>
-		                      <li class="nav-item">
-		                        <a class="nav-link" href="#">
-		                          <i class="mdi mdi-calendar"></i>
-		                          Agenda
-		                        </a>
-		                      </li>
-		                      <li class="nav-item">
-		                        <a class="nav-link" href="#">
-		                          <i class="mdi mdi-attachment"></i>
-		                          Resume
-		                        </a>
-		                      </li>
-		                    </ul>
-		                  </div>
-		                  <div class="profile-feed">
-												{{#each feed}}
-												<div class="d-flex align-items-start profile-feed-item">
-												 <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
-												 <div class="ml-4">
-													 <h6>
-														 Dylan Silva
-														 <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-													 </h6>
-													 <p>
-														{{this.data}}
+						<div class="col-lg-8">
+							
+							<div class="mt-4 py-2 border-top border-bottom">
+								<ul class="nav profile-navbar">
+									<li class="nav-item">
+										<a class="nav-link" href="#">
+											<i class="mdi mdi-account-outline"></i>
+											Info
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" href="#">
+											<i class="mdi mdi-newspaper"></i>
+											Feed
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">
+											<i class="mdi mdi-calendar"></i>
+											Agenda
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">
+											<i class="mdi mdi-attachment"></i>
+											Resume
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div style="position:relative;margin-top:10px;margin-bottom:10px;border:2px grey;">
+								<form id="postform" class="form-horizontal" role="form" method="post" action="/post" enctype="multipart/form-data">
+									<h4>What's New</h4>
+									<div class="form-group" style="padding:10px;">
+										<textarea class="form-control" placeholder="Update your status" name="data"></textarea>
+									</div>
+									<input style="position:relative;margin-left:10px;" type="file" id="image" name="image">
+									<p style="position:relative;margin-left:10px;">Upload image</p>
+									<button style="height:35px;width:70px;position:relative;margin-bottom:2px;margin-left:624px;background-color:#3b5998;color:white;font-size:18px;" type="submit">POST</button><!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
 
-													 </p>
+									<hr />
+							</div>
 
-													 <img src="data:image/png; base64 ,{{this.image}}" alt="sample" class="rounded mw-100">
-													 <p class="small text-muted mt-2 mb-0">
-														 <span>
-															 <i class="mdi mdi-star mr-1"></i>4
-														 </span>
-														 <span class="ml-2">
-															 <i class="mdi mdi-comment mr-1"></i>11
-														 </span>
-														 <span class="ml-2">
-															 <i class="mdi mdi-reply"></i>
-														 </span>
-													 </p>
-												 </div>
-											 </div>
-											 {{/each}}
+							<div class="profile-feed">
+								{{#each feed}}
+								<div class="d-flex align-items-start profile-feed-item">
+									<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
+									<div class="ml-4">
+										<h6>
+											Dylan Silva
+											<small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
+										</h6>
+										<p>
+											{{this.data}}
+
+										</p>
+
+										<img src="data:image/png; base64 ,{{this.image}}" alt="sample" class="rounded mw-100">
+										<p class="small text-muted mt-2 mb-0">
+											<span>
+												<i class="mdi mdi-star mr-1"></i>4
+											</span>
+											<span class="ml-2">
+												<i class="mdi mdi-comment mr-1"></i>11
+											</span>
+											<span class="ml-2">
+												<i class="mdi mdi-reply"></i>
+											</span>
+										</p>
+									</div>
+								</div>
+								{{/each}}
 
 
 
-		                  </div>
-		                </div>
+							</div>
+						</div>
 		              </div>
 		            </div>
 		          </div>

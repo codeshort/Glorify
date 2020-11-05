@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\bin",
+    "\\email",
+    "\\middleware",
+    "\\models",
+    "\\public",
+    "\\public\\posts-page",
+    "\\public\\scss",
+    "\\views"
+  ],
+  "SelectedNode": "\\public\\posts-page\\posts.hbs",
+  "PreviewInSolutionExplorer": false
+}
