@@ -105,6 +105,7 @@ router.get('/post',auth,async (req,res)=>{
 
   Company.findOne({companyName:req.user.company},(err,compny)=>{
     var c=compny.posts;
+    c.reverse();
     for( i=0;i<c.length;i++)
   {  c[i].image   = new Buffer(c[i].image).toString('base64');
 
@@ -118,6 +119,7 @@ router.get('/post',auth,async (req,res)=>{
   }
     res.render(path.join(__dirname,'/../public/posts-page/posts'),{
       feed:c,
+      companyCode : compny.companyCode,
       companyName : compny.companyName,
       description:compny.description,
       location: compny.location,

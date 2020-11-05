@@ -17,6 +17,7 @@ const User = require('./models/User')
 const Company = require('./models/Company')
 const auth = require('./middleware/auth.js')
 const {workdone}= require('./email/email.js');
+var bcrypt = require('bcryptjs')
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');
@@ -63,22 +64,26 @@ app.post('/company',auth,async(req,res)=>{
   try{
     const login_id = req.user._id
     console.log(login_id)
-    comp = await new Company({
-      companyName:req.body.companyName,
-      description:req.body.description,
-      location:req.body.location,
-      admin: [req.user._id],
-      companyCode:"abcd",
-      members:[{
-            userID:req.user._id,
-          rewardBasket:0,
-          giveawayBasket:0
-      }]
-    })
-    console.log("Save ke pehle tak")
-    comp.save().then(()=>{
-      console.log('Company Registered')
-    })
+    bcrypt.genSalt(10, async(err, Salt)=> {
+        bcrypt.hash(req.body.companyName, Salt,async(err, hash) =>{
+             var comp = await new Company({
+               companyName:req.body.companyName,
+               description:req.body.description,
+               location:req.body.location,
+               admin: [req.user._id],
+               members:[{
+                     userID:req.user._id,
+                   rewardBasket:0,
+                   giveawayBasket:0
+               }],
+                companyCode:hash
+             })
+             console.log("Save ke pehle tak aur hash hai ");
+             comp.save().then(()=>{
+               console.log('Company Registered')
+             })
+           })
+         });
     console.log(login_id)
     await User.findOneAndUpdate({_id: login_id} , {company: req.body.companyName , isInCompany: true , isAdmin:false});
         var obj={

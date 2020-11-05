@@ -12,6 +12,10 @@
     <link href="css/main.css" rel="stylesheet" />
   </head>
   <body>
+    <br>
+    <a href="/post">
+          <button type="button" class="btn btn-primary" style="margin-left:60px; border-radius:10px">Back to Posts page</button>
+   </a>
     <div class="s130">
         <form action="/search" method="GET" >
         <div class="inner-form">
@@ -40,7 +44,7 @@
                      <img class="media-object"  width="40" src="https://i.pinimg.com/originals/d4/96/91/d496918c7f6571933812ed319be41717.jpg">
                  </a>
                  <div class="media-body">
-                
+
                     <a href="/profile/{{this.userID}}"> <h4 class="media-heading">{{this.name}}</h4></a>
                  <p><span class="label label-info"></span> <span class="label label-primary" style="background-color:orange">Reward Basket : {{this.rewardBasket}}</span> <span class="label label-info"></span> <span class="label label-primary">Giveaway Basket : {{this.giveawayBasket}}</span></p>
 
