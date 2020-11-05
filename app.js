@@ -127,70 +127,86 @@ console.log(usr)
 
 })
 
-//in progress 
-// app.get('/reward',auth,(req,res)=>{
-//   var profileuser=await User.findById(req.query.usrid)
-//   if(profileuser.company===req.user.company)
-//   {
-//     profileuser.Total_rewards_received+=req.body.reward;
-//     req.user.Total_giveaway_rewards_left-=req.body.reward;
-//
-//
-//   }
-// Company.findOne({companyName:req.user.company},(err,compny)=>{
-//    compny.members.forEach((usr)=>{
-// if(usr._id === req.params.id){
-// usr.rewardBasket = usr.rewardBasket + req.body. ;
-// usr.badgesBasket = usr.badgesBaskte + req.body.
-// })
-// compny.members.forEach((usr)=>
-//   if(usr._id === req.user._id){
-//     usr.giveawayBasket = usr.giveawayBasket - req.body. ;
-//     usr.giveBadgeBasket = usr.giveBadgeBasket - req.body.
-//   }
-//
-// )
-// compny.save().then(()=>{
-//   console.log(compny)
-// })
-// User.findOne({_id:req.user._id},(err,usr)=>{
-//   var obj1 = {
-//     rewards_given:req.body.   ,
-//     rewards_given_to:req.body.
-//   }
-//   giveawayBasket.push(obj1)
-//   var obj2 = {
-//     badges_given:req.body. ,
-//     badges_given_to: req.body.
-//   }
-//   giveBadgeBasket.push(obj2)
-//   usr.Total_rewards_given = usr.Total_rewards_given - req.body.
-//   usr.Total_badges_given = usr.Total_badges_given - req.body.
-//     usr.save().then(()=>{
-//     console.log(usr)
-//     })
-//
-// })
-//  User.findOne({_id:req.params.id},(err,usr)=>{
-//    var obj1 = {
-//     rewards_received:req.body.   ,
-//     rewards_given_by:req.body.
-//   }
-//   giveawayBasket.push(obj1)
-//   var obj2 = {
-//     badges_received:req.body. ,
-//     badges_given_by: req.body.
-//   }
-//   giveBadgeBasket.push(obj2)
-//   usr.Total_rewards_recieved = usr.Total_rewards_received  +  req.body.
-//   usr.Total_badges_received = usr.Total_badges_received + req.body.
-//     usr.save().then(()=>{
-//     console.log(usr)
-//     })
-//
-//
-// }) })
-//
+//in progress
+app.get('/reward',auth,async (req,res)=>{
+
+  var profileuser=await User.findById(req.query.usrid)
+  if(profileuser.hierarchy<req.user.hierarchy)
+  {
+    console.log(profileuser.hierarchy);
+    console.log(req.user.hierachy);
+    res.status(400).send();
+  }
+
+  console.log(profileuser,req.user)
+
+  if(profileuser.company===req.user.company)
+  {
+    if(req.query.credits)
+    {
+      if(  req.user.Total_giveaway_rewards_left< parseInt(req.query.credits))
+      {
+        res.status(400).send;
+      }
+    profileuser.Total_rewards_received+= parseInt(req.query.credits);
+    req.user.Total_giveaway_rewards_left-= parseInt(req.query.credits);
+    }
+    if(req.query.badge)
+    {
+
+      var b=req.query.badge
+      if(  req.user.givebadgeBasket['badge'+b]>0){
+        res.status(400).send;
+      }
+      if(b==='1')
+    {  profileuser.badgesBasket['badge1']+=1;
+      req.user.givebadgeBasket['badge1']-=1;
+    }  if(b==='2')
+    {  profileuser.badgesBasket['badge2']+=1;
+      req.user.givebadgeBasket['badge2']-=1;
+    }   if(b==='3')
+    {    profileuser.badgesBasket['badge3']+=1;
+        req.user.givebadgeBasket['badge3']-=1;
+    }    if(b==='4')
+    {      profileuser.badgesBasket['badge4']+=1;
+    req.user.givebadgeBasket['badge4']-=1;
+    }
+
+    profileuser.save().then(()=>{
+    console.log(profileuser)
+    })
+    req.user.save().then(()=>{
+    console.log(req.user)
+    })
+
+      var cmp=await Company.findOne({companyName:req.user.company})
+      //console.log(cmp,"cmpppppppppp")
+      var ind=cmp.members.findIndex(el=>el.userID==req.user.id)
+      console.log(ind,"DDddddddddddddddd")
+      cmp.members[ind].badgesBasket=req.user.badgesBasket;
+
+      cmp.members[ind].givebadgeBasket=req.user.givebadgeBasket;
+      cmp.members[ind].rewardBasket=req.user.Total_rewards_received;
+      cmp.members[ind].giveawayBasket=req.user.Total_giveaway_rewards_left;
+
+
+
+             ind=cmp.members.findIndex(el=>el.userID==req.query.usrid)
+            cmp.members[ind].badgesBasket=profileuser.badgesBasket;
+
+            cmp.members[ind].givebadgeBasket=profileuser.givebadgeBasket;
+            cmp.members[ind].rewardBasket=profileuser.Total_rewards_received;
+            cmp.members[ind].giveawayBasket=profileuser.Total_giveaway_rewards_left;
+
+            cmp.save().then(()=>{
+              })
+
+}
+              res.redirect(`/profile/${req.query.usrid}`)
+
+}
+})
+
 
 
 

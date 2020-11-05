@@ -102,7 +102,9 @@
                       <!--Adding form thing!!-->
                     <div id="testbutton" onclick="openForm()"></div>
                     <div class="form-popup" id="myForm">
-                   <form action="" class="form-container">
+                   <form action="/reward" class="form-container">
+                     <input type="hidden" name="usrid" value="{{usrid}}" /> 
+
             <h5><i>Select Credits</i></h5>
            <input type="radio" id="five" name="credits" value="5">
            <label for="five"><i class="fa fa-usd" aria-hidden="true" style="color:#99BB6B"></i> 5 Credits</label>
@@ -120,17 +122,17 @@
 
            <br>
            <h5><i>Select Badge </i></h5>
-           <input type="radio" id="badge1" name="badge" value="b1">
-           <label for="badge1"><i class="fas fa-certificate" style="color:#FC9820"></i>  Badge-1</label>
+           <input type="radio" id="badge1" name="badge" value="1">
+           <label for="badge1"><i class="fas fa-certificate" style="color:#FC9820" ></i>  Badge-1</label>
            &nbsp
-           <input type="radio" id="badge2" name="badge" value="b2">
+           <input type="radio" id="badge2" name="badge" value="2">
            <label for="badge2"><i class="fas fa-medal" style="color:#FC9820"></i>  Badge-2</label>
             <br>
 
-           <input type="radio" id="badge3" name="badge" value="b3">
+           <input type="radio" id="badge3" name="badge" value="3">
            <label for="badge3"><i class="fas fa-award" style="color:#FC9820"></i>  Badge-3</label>
             &nbsp
-           <input type="radio" id="badge4" name="badge" value="b4">
+           <input type="radio" id="badge4" name="badge" value="4">
            <label for="badge3"><i class="fas fa-crown" style="color:#FC9820"></i>  Badge-4</label>
            <br><br>
         <button type="submit" class="btn" style="width:100px; height:50px">GLORIFY</button>
