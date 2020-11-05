@@ -47,16 +47,19 @@ members:[
       type:String
     },
     rewardBasket:{
-      type:Number
+      type:Number,
+      default:0
     },
     giveawayBasket:{
-      type:Number
+      type:Number,
+      default:0
+
     },
     badgesBasket:{
       badge1:{
         type:Number
         ,default:0
-    
+
       },
       badge2:{
         type:Number
