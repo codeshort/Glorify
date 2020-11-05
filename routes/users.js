@@ -162,4 +162,65 @@ console.log(compny.posts)
 })
 
 
+router.get('/click/:id', auth, (req, res) => {
+    //var x = 0;
+    Company.findOne({ companyName: req.user.company }, (err, compny) => {
+        // req.user.liked_posts.forEach((post) => {
+
+        //  console.log(req.params.id+"                 "+post._id)
+        // if (post._id === req.params.id) {
+        //     console.log('1111111111111111111')
+        // req.user.liked_posts.pull(post._id)
+        //db.users.update({}, { $pull: { liked_posts: {_id:post._id}}})
+        //    console.log('------------------------')
+        //compny.posts.likes.pull({_id:post._id})
+        //   compny.posts.likes_count = compny.posts.likes_count - 1
+        //    console.log('22222222222222222222222222')
+        //     x++;
+        //       console.log('333333333333333333')
+
+        //        return
+        //       }
+        //         compny.save().then(() => {
+        //console.log(compny)
+        //   console.log('Likes decreased')
+        ////   })
+        //req.user.save().then(() => {
+        //console.log(req.user)
+        // console.log('******************^^^^^^^^^^^^^^')
+        //})
+        //// })
+
+        //console.log('44444444444444444')
+
+        compny.posts.forEach((post) => {
+            console.log(post.id + "                            " + req.params.id)
+            if (post.id === req.params.id) {
+                console.log('::::::::::::::::::::::::::::::::::')
+                req.user.liked_posts.push(post.id)
+                console.log(req.user)
+
+                post.likes.push(req.user._id)
+                post.likes_count = post.likes_count + 1
+            }
+
+        })
+        compny.save().then(() => {
+            //console.log(compny)
+            console.log('Likes increased')
+        })
+        req.user.save().then(() => {
+            // console.log(req.user)
+            console.log('******************^^^^^^^^^^^^^^')
+        })
+
+    })
+    res.redirect('/post')
+
+})
+
+
+
+
+
 module.exports = router;

@@ -25,7 +25,14 @@ posts:[{
   },
   image:{
     type:Buffer
-  }
+    },
+    likes_count: {
+        type: Number,
+        default:0
+    },
+    likes: [{
+        type:mongoose.Schema.Types.ObjectID
+    }]
   //timestamps:true
 }],
 admin:[{
