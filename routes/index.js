@@ -17,29 +17,36 @@ router.get('/',(req,res)=>{
 })
 
 
-router.post('/',async (req,res)=>{
+router.post('/', async (req, res) => {
 
-   var u= await User.findOne({email:req.body.email});
-   if(u)
-   {
-     return res.render(path.join(__dirname+'/../public/Sign/signup-signin'),{
-       signupmsg:"Email already exists",
-     })
-   }
-   user = new User({
-    Username:req.body.Username,
-    email:req.body.email,
-    password:req.body.password
-  })
-  console.log(user)
-  user.save().then(()=>{
-    console.log('Data saved')
-    console.log(user)
-  })
+    var u = await User.findOne({ email: req.body.email });
+    if (u) {
+        return res.render(path.join(__dirname + '/../public/Sign/signup-signin'), {
+            signupmsg: "Email already exists",
+        })
+    }
+
+    bcrypt.genSalt(10, function (err, Salt) {
+        bcrypt.hash(req.body.password, Salt, function (err, hash) {
+            var user = new User({
+                Username: req.body.Username,
+                email: req.body.email,
+                password: hash
+            })
+
+            user.save().then(() => {
+
+            })
+        })
+    })
 
 
-res.redirect('/login')
+
+
+
+    res.redirect('/login')
 })
+
 
 
 
