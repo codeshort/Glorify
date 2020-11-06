@@ -85,7 +85,7 @@
           </div>
         </div>
       </nav>
-      <div class="page-header header-filter" data-parallax="true" style="background-image:url('https://demos.creative-tim.com/bs3/material-kit/assets/img/examples/city.jpg');"></div>
+      <div class="page-header header-filter" data-parallax="true" style="background-image:url('/profile_page/back.jpg');"></div>
       <div class="main main-raised">
         <div class="profile-content">
           <div class="container">
@@ -93,7 +93,7 @@
               <div class="col-md-6 ml-auto mr-auto">
                 <div class="profile">
                   <div class="avatar">
-                    <img src="https://www.livelingua.com/img/profilesTeachers/103/Guillaume-Deneufbourg-Square_Profile_S.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                    <img src="/profile_page/boy1.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                   </div>
                   <div class="name">
                     <h3 class="title">{{Username}}</h3>
@@ -150,12 +150,13 @@
               </div>
               </div>
             </div>
-            <div class="description text-center">
-              <p><h5>Reward Basket credits :<b> {{rewardBasket}} </b></h5>
-                 <h5>  Giveaway Basket credits : <b>{{giveawayBasket}}</b></h5>
-              badgesBasket  {{badgesBasket.badge1}}    {{badgesBasket.badge2}}   {{badgesBasket.badge3}}   {{badgesBasket.badge4}} <br>
-              giveawaybadgeBasket  {{givebadgeBasket.badge1}}  {{givebadgeBasket.badge2}}  {{givebadgeBasket.badge3}}  {{givebadgeBasket.badge4}}
-              </p>
+            <br>
+            <div class="description text-center" style="border:10px;border-style: ridge;">
+              <br>
+            <h5><i class="fas fa-coins" style="color:orange"></i> Reward Basket credits :<b> {{rewardBasket}} </b></h5>
+                 <h5><i class="fas fa-coins" style="color:orange"></i> Giveaway Basket credits : <b>{{giveawayBasket}}</b></h5><br>
+              <h5> <i class="fas fa-trophy" style="color:orange"></i> Badges Basket:</h5> <ol style="list-style-type: none;"> <li><i class="fas fa-certificate" style="color:#E155FD "></i><b> Hard Working:  </b> {{badgesBasket.badge1}}  </li> <li> <i class="fas fa-certificate" style="color:#E155FD "></i> <b> Achiever  </b> {{badgesBasket.badge2}}  </li><li>   <i class="fas fa-certificate" style="color:#E155FD "></i>: <b> Punctual  </b> {{badgesBasket.badge3}}   </li><li>  <i class="fas fa-certificate" style="color:#E155FD "></i>: <b> Team Leader  </b>{{badgesBasket.badge4}} </li></ol>
+              <h5><i class="fas fa-trophy" style="color:orange"></i> Give Away Badge Basket: </h5> <ol style="list-style-type: none;"> <li><i class="fas fa-certificate" style="color:#E155FD "></i>: <b> Hard Working:  </b>{{givebadgeBasket.badge1}}  </li><li> <i class="fas fa-certificate" style="color:#E155FD "></i><b> Achiever  </b> {{givebadgeBasket.badge2}}  </li><li>   <i class="fas fa-certificate" style="color:#E155FD "></i>  <b> Punctual  </b> {{givebadgeBasket.badge3}}   </li><li>  <i class="fas fa-certificate" style="color:#E155FD "></i> <b> Team Leader  </b> {{givebadgeBasket.badge4}} </li></ol>
             </div>
             <div class="row">
               <div class="col-md-6 ml-auto mr-auto">
