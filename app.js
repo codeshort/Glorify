@@ -51,10 +51,6 @@ app.get('/',(req,res)=>{
   res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 
-app.get('/main_page',(req,res)=>{
-
-  res.render(path.join(__dirname+'/../public/Main_page/Main_page'));
-})
 
 
 app.get('/company',(req,res)=>{
@@ -64,7 +60,8 @@ app.post('/company',auth,async(req,res)=>{
   try{
     const login_id = req.user._id
     var c=Company.findOne({companyName:req.body.companyName})
-    if(c){
+    if(c.companyName){
+      console.log(c)
       return   res.render(path.join(__dirname+'/public/host-join_company_pages/companysignup'),{
         hostmsg:`Company : ${req.body.companyName} is already registered`
       })
@@ -78,10 +75,14 @@ app.post('/company',auth,async(req,res)=>{
                location:req.body.location,
                admin: [req.user._id],
                members:[{
+
                      userID:req.user._id,
+                     name:req.user.Username,
                    rewardBasket:0,
-                   giveawayBasket:0
-               }],
+                   giveawayBasket:0,
+                   badgesBasket:{badge1:0,badge2:0,badge3:0,badge4:0},
+                      givebadgeBasket:{badge1:3,badge2:3,badge3:3,badge4:3},
+                    }],
                 companyCode:hash
              })
              console.log("Save ke pehle tak aur hash hai ");
@@ -135,6 +136,7 @@ console.log(usr)
     done:done_rev,
     usrid:req.params.id,
     Username:usr.Username,
+    Designation:usr.Designation,
     rewardBasket:usr.Total_rewards_received,
     giveawayBasket:usr.Total_giveaway_rewards_left,
     badgesBasket:usr.badgesBasket,
@@ -258,7 +260,7 @@ app.post('/profile/post/add',auth,async(req,res)=>{
              timestamp: Date.now(),
              string_date: Date(),
              date: (Date())[8] + (Date())[9],
-             month: (Date())[4] + (Date())[5] + (Date())[6] 
+             month: (Date())[4] + (Date())[5] + (Date())[6]
          });
     }
 
@@ -307,7 +309,7 @@ console.log(req.query.usrid,req.user)
         timestamp: Date.now(),
         string_date: Date(),
         date: (Date())[8] + (Date())[9],
-        month: (Date())[4] + (Date())[5] + (Date())[6] 
+        month: (Date())[4] + (Date())[5] + (Date())[6]
     })
 
     }
@@ -356,7 +358,7 @@ app.post('/profile/post/done',auth,async(req,res)=>{
                  timestamp: Date.now(),
                  string_date: Date(),
                  date: (Date())[8] + (Date())[9],
-                 month: (Date())[4] + (Date())[5] + (Date())[6] 
+                 month: (Date())[4] + (Date())[5] + (Date())[6]
              })
         }
     req.user.save().then(() =>
@@ -383,7 +385,6 @@ app.post('/join',auth, async (req,res)=>{
 try{
   if(req.user.isInCompany)
   {
-    console.log('ssssin')
     return  res.render(path.join(__dirname+'/public/host-join_company_pages/companyjoin'),{
       joinmsg: "You can only join one company at a time!",
     });
@@ -400,8 +401,8 @@ try{
     console.log(found_company)
     const login_id = req.user._id
     console.log(login_id)
-    await User.findOneAndUpdate({_id: login_id} , {company: found_company , isInCompany: true , isAdmin:false} );
-    console.log("this happened")
+    await User.findOneAndUpdate({_id: login_id} , {company: found_company ,   Designation:req.body.Designation,
+                                                    hierarchy:req.body.hierarchy,isInCompany: true , isAdmin:false} );
     try{
       var obj={
         userID:req.user._id,
