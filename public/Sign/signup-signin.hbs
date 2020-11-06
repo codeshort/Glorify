@@ -41,20 +41,20 @@
               <!--Taking Username input-->
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" name="Username" required/>
+              <input type="text" placeholder="Username" name="Username"  autocomplete="off"  required/>
             </div>
 
               <!--Taking Email input-->
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="email" placeholder="Email" id="email"
-                  name ="email" pattern=".+@++.com" size="30" required/>
+                  name ="email" pattern=".+@++.com" size="30" autocomplete="off"   required/>
             </div>
 
               <!--Taking Password input-->
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name ="password" placeholder="Password" required/>
+              <input type="password" name ="password"  autocomplete="off"  placeholder="Password" required/>
             </div>
             <input type="submit" class="btn" value="Sign up" />
             <h6 style="color:red">{{signupmsg}}</h6>
