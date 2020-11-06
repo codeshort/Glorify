@@ -15,6 +15,10 @@ posts:[{
     type:String,
     required:true
   },
+  name:{
+    type:String,
+    required:true,
+  },
   data:{
     type:String,
     required:true
@@ -67,13 +71,14 @@ members:[
     name:{
       type:String
     },
+  
     rewardBasket:{
       type:Number,
       default:0
     },
     giveawayBasket:{
       type:Number,
-      default:0
+      default:500
 
     },
     badgesBasket:{
@@ -102,22 +107,22 @@ members:[
     givebadgeBasket:{
       badge1:{
         type:Number,
-        default:0
+        default:3
 
       },
       badge2:{
         type:Number
-        ,default:0
+        ,default:3
 
       },
       badge3:{
         type:Number
-        ,default:0
+        ,default:3
 
       },
       badge4:{
         type:Number
-        ,default:0
+        ,default:3
 
       },
     },

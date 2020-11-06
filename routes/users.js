@@ -9,6 +9,7 @@ var path = require('path');
 const sharp=require('sharp');
 // const sharp=require('sharp')
 /* GET users listing. */
+const jwt =require('jsonwebtoken')
 
 /* GET users listing. */
 var mongoose = require('mongoose')
@@ -46,22 +47,43 @@ router.post('/login',async (req,res)=>{
 
 router.get('/logout',auth ,async(req,res)=>{
   try {
- console.log("f",req.cookies);
 
     // req.cookies.set('jwt', {maxAge: 0});
     res.clearCookie("jwt");
 
     console.log("s",req.cookies);
+    res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{button_name:"Login/Signup",button_name_link:"login"});
 
-    res.send("done");
   } catch (e) {
     res.status(500).send()
   }
 })
 
-router.get('/after_login',auth,(req,res)=>{
-  res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{user:req.user});
-})
+router.get('/after_login',async(req,res)=>{
+
+try{
+  const token= await req.cookies['jwt'];
+  if(!token)
+  {
+    throw new Error()
+
+  }
+  const decoded=await jwt.verify(token,'secret')
+  const user =await User.findOne({_id:decoded._id})
+  if(!user){
+    throw new Error()
+  }
+  req.user=user
+  res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{user:req.user,button_name:"Log out",button_name_link:"logout"});
+}catch(e){
+  console.log(e);
+  res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{button_name:"Login/Signup",button_name_link:"login"})
+}
+
+
+}
+
+)
 
 
 
@@ -121,7 +143,6 @@ router.get('/post',auth,async (req,res)=>{
 router.post('/post',auth, upload.single('image') ,async(req,res)=>{
 
 try{
-  console.log(req.body.data,"uhiuhioj")
 console.log(req.file,req.file.buffer)
   var postimage="";
 //   if(req.body.contains_image)
@@ -136,7 +157,7 @@ console.log(req.body)
 
   Company.findOne({companyName:req.user.company},(err,compny)=>{
       compny.posts.push({
-          user: req.user._id, data: req.body.data, contains_image: req.body.contains_image, image: buffer, curr_date: new Date(), timestamp: Date.now(), string_date: Date(), date: (Date())[8] + (Date())[9],
+          user: req.user._id,name:req.user.Username, data: req.body.data, contains_image: req.body.contains_image, image: buffer, curr_date: new Date(), timestamp: Date.now(), string_date: Date(), date: (Date())[8] + (Date())[9],
           month: (Date())[4] + (Date())[5] + (Date())[6], hour: (Date())[16] + (Date())[17], min: (Date())[19] + (Date())[20]})
 console.log(compny)
     compny.save().then(() =>{
@@ -155,54 +176,27 @@ console.log(compny.posts)
 })
 
 
-router.get('/click/:id', auth, (req, res) => {
+router.get('/click/:id', auth, async (req, res) => {
     //var x = 0;
-    Company.findOne({ companyName: req.user.company }, (err, compny) => {
-        // req.user.liked_posts.forEach((post) => {
+  await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {
 
-        //  console.log(req.params.id+"                 "+post._id)
-        // if (post._id === req.params.id) {
-        //     console.log('1111111111111111111')
-        // req.user.liked_posts.pull(post._id)
-        //db.users.update({}, { $pull: { liked_posts: {_id:post._id}}})
-        //    console.log('------------------------')
-        //compny.posts.likes.pull({_id:post._id})
-        //   compny.posts.likes_count = compny.posts.likes_count - 1
-        //    console.log('22222222222222222222222222')
-        //     x++;
-        //       console.log('333333333333333333')
-
-        //        return
-        //       }
-        //         compny.save().then(() => {
-        //console.log(compny)
-        //   console.log('Likes decreased')
-        ////   })
-        //req.user.save().then(() => {
-        //console.log(req.user)
-        // console.log('******************^^^^^^^^^^^^^^')
-        //})
-        //// })
-
-        //console.log('44444444444444444')
-
-        compny.posts.forEach((post) => {
-            console.log(post.id + "                            " + req.params.id)
+        await compny.posts.forEach( async(post) => {
+        //    console.log(post.id + "                            " + req.params.id)
             if (post.id === req.params.id) {
                 console.log('::::::::::::::::::::::::::::::::::')
-                req.user.liked_posts.push(post.id)
-                console.log(req.user)
+                 await req.user.liked_posts.push(post.id)
+          //      console.log(req.user)
 
-                post.likes.push(req.user._id)
-                post.likes_count = post.likes_count + 1
+                await   post.likes.push(req.user._id)
+           post.likes_count =    await (post.likes_count + 1)
             }
 
         })
-        compny.save().then(() => {
+        await compny.save().then(() => {
             //console.log(compny)
             console.log('Likes increased')
         })
-        req.user.save().then(() => {
+      await   req.user.save().then(() => {
             // console.log(req.user)
             console.log('******************^^^^^^^^^^^^^^')
         })

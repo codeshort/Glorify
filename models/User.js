@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const db = 'mongodb+srv://Globalshala:OnlineDatabase@cluster0.wkx7c.mongodb.net/DB?retryWrites=true&w=majority'
 mongoose.connect(db,{useNewUrlParser: true,
 useUnifiedTopology: true,
@@ -20,6 +19,9 @@ Username:{
 email:{
   type:String,
   required:true
+},
+Designation:{
+  type:String
 },
 password:{
   type:String,
