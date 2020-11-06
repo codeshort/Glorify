@@ -135,7 +135,9 @@ console.log(req.file,req.file.buffer)
 console.log(req.body)
 
   Company.findOne({companyName:req.user.company},(err,compny)=>{
-    compny.posts.push({user:req.user._id,data:req.body.data,contains_image:req.body.contains_image,image:buffer})
+      compny.posts.push({
+          user: req.user._id, data: req.body.data, contains_image: req.body.contains_image, image: buffer, curr_date: new Date(), timestamp: Date.now(), string_date: Date(), date: (Date())[8] + (Date())[9],
+          month: (Date())[4] + (Date())[5] + (Date())[6], hour: (Date())[16] + (Date())[17], min: (Date())[19] + (Date())[20]})
 console.log(compny)
     compny.save().then(() =>{
       console.log("post added")

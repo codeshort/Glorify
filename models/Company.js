@@ -32,7 +32,28 @@ posts:[{
     },
     likes: [{
         type:mongoose.Schema.Types.ObjectID
-    }]
+    }],
+    curr_date: {
+
+    },
+    timestamp: {
+
+    },
+    string_date: {
+
+    },
+    date: {
+        type: String
+    },
+    month: {
+        type: String
+    },
+    hour: {
+        type: String
+    },
+    min: {
+        type: String
+    }
   //timestamps:true
 }],
 admin:[{

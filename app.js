@@ -253,7 +253,12 @@ app.post('/profile/post/add',auth,async(req,res)=>{
     else {
          await req.user.todo.push({work:req.body.name,
                 assigned_by:req.user._id,
-               assigned_by_name: req.user.Username
+             assigned_by_name: req.user.Username,
+             curr_date: new Date(),
+             timestamp: Date.now(),
+             string_date: Date(),
+             date: (Date())[8] + (Date())[9],
+             month: (Date())[4] + (Date())[5] + (Date())[6] 
          });
     }
 
@@ -297,7 +302,12 @@ console.log(req.query.usrid,req.user)
     console.log("working console" ,req.body);
     await req.user.working.push({work:req.body.name,
            assigned_by:req.user._id,
-          assigned_by_name: req.user.Username
+        assigned_by_name: req.user.Username,
+        curr_date: new Date(),
+        timestamp: Date.now(),
+        string_date: Date(),
+        date: (Date())[8] + (Date())[9],
+        month: (Date())[4] + (Date())[5] + (Date())[6] 
     })
 
     }
@@ -341,7 +351,12 @@ app.post('/profile/post/done',auth,async(req,res)=>{
     else {
              req.user.done.push({work:req.body.name,
                     assigned_by:req.user._id,
-                   assigned_by_name: req.user.Username
+                 assigned_by_name: req.user.Username,
+                 curr_date: new Date(),
+                 timestamp: Date.now(),
+                 string_date: Date(),
+                 date: (Date())[8] + (Date())[9],
+                 month: (Date())[4] + (Date())[5] + (Date())[6] 
              })
         }
     req.user.save().then(() =>

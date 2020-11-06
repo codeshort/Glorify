@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -211,7 +211,7 @@
       {{#each todo}}
       <li>
         <div>
-          <time>25/10</time>
+            <time>{{this.date}}  {{this.month}}</time>
           <div class="discovery">
             <p>
               <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
@@ -266,7 +266,7 @@
                          {{#each working}}
                          <li>
                            <div>
-                             <time>25/10</time>
+                               <time>{{this.date}}  {{this.month}}</time>
                              <div class="discovery">
                                <p>
                                   <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
@@ -323,7 +323,7 @@
                          {{#each done}}
                          <li>
                            <div>
-                             <time>25/10</time>
+                               <time>{{this.date}}  {{this.month}}</time>
                              <div class="discovery">
                                <p>
                                 <b>Assigned By:-</b><a href="/profile/{{this.assigned_by}}">{{this.assigned_by_name}}</a>
