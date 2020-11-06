@@ -58,7 +58,7 @@ posts:[{
     min: {
         type: String
     }
-  //timestamps:true
+  
 }],
 admin:[{
   type:mongoose.Schema.Types.ObjectID

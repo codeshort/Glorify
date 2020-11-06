@@ -7,11 +7,6 @@ var User = require('../models/User')
 var bcrypt = require('bcryptjs')
 
 
-/* GET home page. */
-router.get('/main_page',(req,res)=>{
-    res.render(path.join(__dirname+'/../public/Main_page/Main_page'));
-})
-
 
 router.get('/',(req,res)=>{
 
@@ -21,28 +16,28 @@ router.get('/',(req,res)=>{
 
 router.post('/', async (req, res) => {
 
-    var u = await User.findOne({ email: req.body.email });
-    if (u) {
+    var u = await User.findOne({ email: req.body.email });   //checking if email already exists
+    if (u) {     //will send an error message if the email already exists
         return res.render(path.join(__dirname + '/../public/Sign/signup-signin'), {
             signupmsg: "Email already exists",
         })
     }
 
-    bcrypt.genSalt(10, function (err, Salt) {
+    bcrypt.genSalt(10, function (err, Salt) {    //bcrypt is used for encrypting password.
         bcrypt.hash(req.body.password, Salt, function (err, hash) {
-            var user = new User({
+            var user = new User({   //all the fields of the requested user is filled
                 Username: req.body.Username,
-                email: req.body.email,
+                email: req.body.email,   
                 password: hash
             })
 
-            user.save().then(() => {
+            user.save().then(() => { //data is saved to database
 
             })
         })
     })
 
-    res.redirect('/login')
+    res.redirect('/login')   
 })
 
 
@@ -53,7 +48,7 @@ router.post('/', async (req, res) => {
 
 router.get('/login',(req,res)=>{
 
-  res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
+  res.render(path.join(__dirname+'/../public/Sign/signup-signin'));  //will be redirected to sign-up sign-in page
 })
 
 
