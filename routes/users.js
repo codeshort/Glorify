@@ -164,7 +164,7 @@ router.post('/post',auth, upload.single('image') ,async(req,res)=>{
 
 
 router.get('/click/:id', auth, async (req, res) => {
-    await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {
+    await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {//company is extracted from database whose name is equal to user;s company name
         await compny.posts.forEach( async(post) => {
             if (post.id === req.params.id) {
                  await req.user.liked_posts.push(post.id)
