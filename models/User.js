@@ -171,22 +171,22 @@ badgesBasket:{
 givebadgeBasket:{
   badge1:{
     type:Number,
-    default:0
+    default:10
 
   },
   badge2:{
     type:Number
-    ,default:0
+    ,default:10
 
   },
   badge3:{
     type:Number
-    ,default:0
+    ,default:10
 
   },
   badge4:{
     type:Number
-    ,default:0
+    ,default:10
 
   },
 },
@@ -196,7 +196,7 @@ Total_rewards_received:{
 },
 Total_giveaway_rewards_left:{
   type:Number,
-  default:0
+  default:1000
     },
     liked_posts: [{
         type:mongoose.Schema.Types.ObjectID

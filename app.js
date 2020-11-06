@@ -105,7 +105,7 @@ app.post('/company',auth,async(req,res)=>{
        // comp_admins.push(req.user._id)
        // compny.admin = comp_admins
 
-    res.redirect('/join')
+    res.redirect('/profile')
   }
   catch(e) {}
 })
@@ -406,7 +406,7 @@ try{
     try{
       var obj={
         userID:req.user._id,
-
+        name:req.user.Username
       }
      var comp_members = compny.members;
      comp_members.push(obj)
@@ -419,7 +419,7 @@ try{
   catch(e){console.log("error-box-2" , e)}
       console.log("this too happened")
   })
-res.redirect('/company')
+res.redirect('/profile')
 
 }
 catch(e)

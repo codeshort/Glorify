@@ -203,7 +203,7 @@
          <h1>Project Updates</h1>
          <form action="post/add?usrid={{usrid}}" method="post">
            <label id="icon" for="name"><i class="far fa-edit"></i></label>
-           <input type="text" name="name" id="name" placeholder="ToDo" maxlength="100"/>
+           <input type="text" name="name" id="name" placeholder="ToDo" autocomplete="off" maxlength="100"/>
            <div class="btn-block">
              <button type="submit" href="/" id ="create">Create</button>
            </div>
@@ -260,7 +260,7 @@
                      <h1>Project Updates</h1>
                           <form action="post/working?usrid={{usrid}}" method="post">
                             <label id="icon" for="name"><i class="fas fa-plus-circle"></i></label>
-                            <input type="text" name="name" id="name" placeholder="Working" />
+                            <input type="text" name="name" id="name" placeholder="Working"  autocomplete="off" />
                             <div class="btn-block">
                               <button type="submit" href="/" id="add" >Add</button>
                             </div>
@@ -314,7 +314,7 @@
                                <!--*************************-->
                    <div class="main-block">
                      <h1>Project Updates</h1>
-                     <form action="post/done?usrid={{usrid}}" method="post">
+                     <form action="post/done?usrid={{usrid}}" method="post"  autocomplete="off" >
                      <label id="icon" for="name"><i class="fas fa-chess-queen"></i></label>
                      <input type="text" name="name" placeholder="Done"/>
                      <div class="btn-block">

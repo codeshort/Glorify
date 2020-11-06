@@ -17,7 +17,7 @@ posts:[{
   },
   name:{
     type:String,
-    
+
   },
   data:{
     type:String,
@@ -78,7 +78,7 @@ members:[
     },
     giveawayBasket:{
       type:Number,
-      default:500
+      default:1000
 
     },
     badgesBasket:{
@@ -107,22 +107,22 @@ members:[
     givebadgeBasket:{
       badge1:{
         type:Number,
-        default:3
+        default:10
 
       },
       badge2:{
         type:Number
-        ,default:3
+        ,default:10
 
       },
       badge3:{
         type:Number
-        ,default:3
+        ,default:10
 
       },
       badge4:{
         type:Number
-        ,default:3
+        ,default:10
 
       },
     },
