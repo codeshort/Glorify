@@ -21,28 +21,43 @@ router.get('/login',async (req,res)=>{
     res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
 
-router.post('/login',async (req,res)=>{
-  try{
+router.post('/login', async (req, res) => {
+    try {
 
-       User.findOne({"email":req.body.email,"password":req.body.password},'Username email password',   async (err, usr)=> {
+        User.findOne({ "email": req.body.email }, 'Username email password', async (err, usr) => {
 
-        if (!usr) {
-          return res.render(path.join(__dirname+'/../public/Sign/signup-signin'),{
-            loginmsg:"Email or password incorrect!"
-          })
-        }
+            if (!usr) {
+                return res.render(path.join(__dirname + '/../public/Sign/signup-signin'), {
+                    loginmsg: "Email or password incorrect!"
+                })
+            }
+            bcrypt.compare(req.body.password, usr.password, async function (err, isMatch) {
 
-           const token =await  usr.generateAuthToken()
-        //  console.log(req.cookies);
-          res.cookie('jwt',token, {maxAge: 3600000 })
-          res.redirect('/after_login');
-      })
+                if (isMatch) {
+
+                    const token = await usr.generateAuthToken()
 
 
-  }catch(e){
-      res.status(400).send()
-  }
+                    res.cookie('jwt', token, { maxAge: 3600000 })
+
+                    res.redirect('/after_login');
+                }
+                if (!isMatch) {
+                    return res.render(path.join(__dirname + '/../public/Sign/signup-signin'), {
+                        loginmsg: "Email or password incorrect!"
+                    })
+                }
+
+            })
+
+        })
+
+
+    } catch (e) {
+        res.status(400).send()
+    }
 })
+
 
 
 router.get('/logout',auth ,async(req,res)=>{
