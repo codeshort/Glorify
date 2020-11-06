@@ -1,8 +1,6 @@
-// var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-// var logger = require('morgan');
 var mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,23 +16,15 @@ const Company = require('./models/Company')
 const auth = require('./middleware/auth.js')
 const {workdone}= require('./email/email.js');
 var bcrypt = require('bcryptjs')
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'hbs');
-// app.set('view engine', 'html');
-// app.use('/static', express.static(__dirname + '/views'));
 const db = 'mongodb+srv://Globalshala:OnlineDatabase@cluster0.wkx7c.mongodb.net/DB?retryWrites=true&w=majority'
-//const db = 'mongodb://127.0.0.1:27017/new'
 mongoose.connect(db,  {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-//useFindAndModify: false,
   useCreateIndex: true
 
 })
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
-// app.use(logger('dev'));
 app.set('view engine','hbs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -61,12 +51,10 @@ app.post('/company',auth,async(req,res)=>{
     const login_id = req.user._id
     var c=Company.findOne({companyName:req.body.companyName})
     if(c.companyName){
-      console.log(c)
       return   res.render(path.join(__dirname+'/public/host-join_company_pages/companysignup'),{
         hostmsg:`Company : ${req.body.companyName} is already registered`
       })
     }
-    console.log(login_id)
     bcrypt.genSalt(10, async(err, Salt)=> {
         bcrypt.hash(req.body.companyName, Salt,async(err, hash) =>{
              var comp = await new Company({
@@ -85,7 +73,6 @@ app.post('/company',auth,async(req,res)=>{
                     }],
                 companyCode:hash
              })
-             console.log("Save ke pehle tak aur hash hai ");
              comp.save().then(()=>{
                console.log('Company Registered')
              })
@@ -98,20 +85,15 @@ app.post('/company',auth,async(req,res)=>{
           rewardBasket:0,
           giveawayBasket:0
         }
-       // var comp_members = compny.members;
-       // comp_members.push(obj)
-       // compny.members= comp_members
-       // var comp_admins = compny.admin;
-       // comp_admins.push(req.user._id)
-       // compny.admin = comp_admins
 
     res.redirect('/profile')
   }
   catch(e) {}
 })
-// Profile page routing!!
 
-//
+
+
+//************* Profile page routing!!********************
 app.get('/profile',auth,(req,res)=>{
   res.redirect(`/profile/${req.user._id}`)
 
@@ -119,10 +101,8 @@ app.get('/profile',auth,(req,res)=>{
 //
 app.get('/profile/:id',auth,async (req,res)=>
 {
-  console.log(req.params.id)
   var usr=await User.findById(req.params.id)
 
-console.log(usr)
   var todo_rev = usr.todo;
   todo_rev.reverse();
   var working_rev =usr.working
@@ -144,14 +124,12 @@ console.log(usr)
   });
 
 })
-//in progress
+
 app.get('/reward',auth,async (req,res)=>{
 
   var profileuser=await User.findById(req.query.usrid)
   if(profileuser.hierarchy>req.user.hierarchy)
-  {console.log("Dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-    console.log(profileuser.hierarchy);
-    console.log(req.user.hierarchy);
+  {
   return   res.status(400).redirect(`/profile/${req.query.usrid}`)
   }
 
@@ -194,7 +172,6 @@ app.get('/reward',auth,async (req,res)=>{
     })
 
       var cmp=await Company.findOne({companyName:req.user.company})
-      //console.log(cmp,"cmpppppppppp")
       var ind=cmp.members.findIndex(el=>el.userID==req.user.id)
       cmp.members[ind].badgesBasket=req.user.badgesBasket;
 
@@ -231,6 +208,9 @@ app.get('/reward',auth,async (req,res)=>{
 
 app.post('/profile/post/add',auth,async(req,res)=>{
   try{
+    var assigned=req.user._id;
+    var assigned_by_n=req.user.Username;
+
     req.user=await User.findById(req.query.usrid)
 
     if(req.query.initial)
@@ -254,8 +234,8 @@ app.post('/profile/post/add',auth,async(req,res)=>{
     }
     else {
          await req.user.todo.push({work:req.body.name,
-                assigned_by:req.user._id,
-             assigned_by_name: req.user.Username,
+             assigned_by:assigned,
+             assigned_by_name: assigned_by_n,
              curr_date: new Date(),
              timestamp: Date.now(),
              string_date: Date(),
@@ -277,17 +257,18 @@ app.post('/profile/post/add',auth,async(req,res)=>{
 //**************************************************************************************************************************
 app.post('/profile/post/working',auth,async(req,res)=>{
   try{
+
+    var assigned=req.user._id;
+    var assigned_by_n=req.user.Username;
+
     req.user=await User.findById(req.query.usrid)
-console.log(req.query.usrid,req.user)
     if(req.query.initial){
       if(req.query.initial=="todo")
       {
 
           var added=  await req.user.todo.find(el => el._id == req.query.obj);
-          //console.log("#########:" , req.user.todo,added);
           req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
           await req.user.working.push(added);
-          //console.log(req.user.todo);
       }
       else if(req.query.initial=="working")
       {
@@ -301,10 +282,9 @@ console.log(req.query.usrid,req.user)
       }
     }
   else {
-    console.log("working console" ,req.body);
-    await req.user.working.push({work:req.body.name,
-           assigned_by:req.user._id,
-        assigned_by_name: req.user.Username,
+        await req.user.working.push({work:req.body.name,
+        assigned_by:assigned,
+        assigned_by_name: assigned_by_n,
         curr_date: new Date(),
         timestamp: Date.now(),
         string_date: Date(),
@@ -328,6 +308,9 @@ console.log(req.query.usrid,req.user)
 
 app.post('/profile/post/done',auth,async(req,res)=>{
   try{
+    var assigned=req.user._id;
+    var assigned_by_n=req.user.Username;
+
     req.user=await User.findById(req.query.usrid)
 
     if(req.query.initial)
@@ -352,8 +335,8 @@ app.post('/profile/post/done',auth,async(req,res)=>{
     }
     else {
              req.user.done.push({work:req.body.name,
-                    assigned_by:req.user._id,
-                 assigned_by_name: req.user.Username,
+                 assigned_by:assigned,
+                 assigned_by_name: assigned_by_n,
                  curr_date: new Date(),
                  timestamp: Date.now(),
                  string_date: Date(),
@@ -380,8 +363,7 @@ app.get('/join',(req,res)=>{
 })
 
 app.post('/join',auth, async (req,res)=>{
-  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//  console.log('Redirected',req.body.CompanyCode)
+
 try{
   if(req.user.isInCompany)
   {
@@ -390,17 +372,14 @@ try{
     });
   }
    var comp_code = req.body.CompanyCode
-   console.log(req.body.CompanyCode)
-  Company.findOne({companyCode: comp_code},'companyName members', async(err,compny) =>{
+   Company.findOne({companyCode: comp_code},'companyName members', async(err,compny) =>{
     if(err)
     {
       console.log('error box ', err)
       return
     }
     found_company= compny.companyName
-    console.log(found_company)
     const login_id = req.user._id
-    console.log(login_id)
     await User.findOneAndUpdate({_id: login_id} , {company: found_company ,   Designation:req.body.Designation,
                                                     hierarchy:req.body.hierarchy,isInCompany: true , isAdmin:false} );
     try{
@@ -412,7 +391,6 @@ try{
      comp_members.push(obj)
      compny.members= comp_members
      compny.save().then(() =>{
-       console.log("Join waala save hua hai")
      })
    }
 
@@ -429,18 +407,14 @@ catch(e)
 })
 
 app.get('/search',auth,async (req,res)=>{
-  console.log(req.query.searched_user)
   const compny=await Company.findOne({companyName:req.user.company})
   var mem= compny.members;
-  console.log(mem)
   if(req.query.searched_user)
   {
     mem=mem.filter((m)=>{
       return m.name===req.query.searched_user
-      // console.log("s",m.name,"s","s",req.query.searched_user,"s")
     })
   }
-  console.log(mem)
   res.render(path.join(__dirname+'/public/search/search'),{member:mem })
 })
 
@@ -462,6 +436,7 @@ app.post('/profile/post/sendmail',auth,async (req,res)=>{
   catch(e)
   {
     console.log('done-error',e);
+    res.redirect('/profile')
   }
 })
 
@@ -471,5 +446,3 @@ app.post('/profile/post/sendmail',auth,async (req,res)=>{
 app.listen(3000, ()=>{
   console.log('server is up on 3000')
 });
-
-//module.exports = app;

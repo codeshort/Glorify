@@ -5,6 +5,8 @@ router.use(express.static(path.join(__dirname, '/../public')));
 var mongoose = require('mongoose')
 var User = require('../models/User')
 var bcrypt = require('bcryptjs')
+
+
 /* GET home page. */
 router.get('/main_page',(req,res)=>{
     res.render(path.join(__dirname+'/../public/Main_page/Main_page'));
@@ -39,10 +41,6 @@ router.post('/', async (req, res) => {
             })
         })
     })
-
-
-
-
 
     res.redirect('/login')
 })

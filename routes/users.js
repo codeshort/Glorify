@@ -7,16 +7,10 @@ var bcrypt=require('bcryptjs')
 const multer=require('multer')
 var path = require('path');
 const sharp=require('sharp');
-// const sharp=require('sharp')
-/* GET users listing. */
 const jwt =require('jsonwebtoken')
-
-/* GET users listing. */
 var mongoose = require('mongoose')
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-//
+
+
 router.get('/login',async (req,res)=>{
     res.render(path.join(__dirname+'/../public/Sign/signup-signin'));
 })
@@ -63,10 +57,8 @@ router.post('/login', async (req, res) => {
 router.get('/logout',auth ,async(req,res)=>{
   try {
 
-    // req.cookies.set('jwt', {maxAge: 0});
     res.clearCookie("jwt");
 
-    console.log("s",req.cookies);
     res.render(path.join(__dirname+'/../public/Main_page0/After_login'),{button_name:"Login/Signup",button_name_link:"login"});
 
   } catch (e) {
@@ -115,16 +107,6 @@ const upload =multer({
 
     }
   })
-  // var storage = multer.diskStorage({
-  //   destination: function (req, file, cb) {
-  //     cb(null, path.join(__dirname,'/../public/'))
-  //   },
-  //   filename: function (req, file, cb) {
-  //     cb(null, file.fieldname + '-' + Date.now())
-  //   }
-  // })
-  //
-  // var upload = multer({ storage: storage })
   router.use(express.static(path.join(__dirname, '/../public')));
 
 router.get('/post',auth,async (req,res)=>{
@@ -153,20 +135,15 @@ router.get('/post',auth,async (req,res)=>{
     });
   });
 });
-//making posts
 
 router.post('/post',auth, upload.single('image') ,async(req,res)=>{
 
 try{
 console.log(req.file,req.file.buffer)
   var postimage="";
-//   if(req.body.contains_image)
-//   {
      upload.single(req.body.image)
   const buffer= await sharp(req.file.buffer).resize({width:250,height:250}).png().toBuffer()
-//   postimage=buffer
-//
-//   }
+
 
 console.log(req.body)
 
@@ -191,28 +168,20 @@ console.log(compny.posts)
 
 
 router.get('/click/:id', auth, async (req, res) => {
-    //var x = 0;
   await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {
 
         await compny.posts.forEach( async(post) => {
-        //    console.log(post.id + "                            " + req.params.id)
             if (post.id === req.params.id) {
-                console.log('::::::::::::::::::::::::::::::::::')
                  await req.user.liked_posts.push(post.id)
-          //      console.log(req.user)
-
-                await   post.likes.push(req.user._id)
+                 await  post.likes.push(req.user._id)
            post.likes_count =    await (post.likes_count + 1)
             }
 
         })
         await compny.save().then(() => {
-            //console.log(compny)
             console.log('Likes increased')
         })
       await   req.user.save().then(() => {
-            // console.log(req.user)
-            console.log('******************^^^^^^^^^^^^^^')
         })
 
     })
