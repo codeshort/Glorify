@@ -58,7 +58,22 @@ todo:[{
    },
    assigned_by_name:{
      type:String
-   }
+    },
+    curr_date: {
+
+    },
+    timestamp: {
+
+    },
+    string_date: {
+
+    },
+    date: {
+        type: String
+    },
+    month: {
+        type: String
+    }
 }],
 working:[{
   work:{
@@ -69,7 +84,22 @@ working:[{
   },
   assigned_by_name:{
     type:String
-  }
+    },
+    curr_date: {
+
+    },
+    timestamp: {
+
+    },
+    string_date: {
+
+    },
+    date: {
+        type: String
+    },
+    month: {
+        type: String
+    }
 }],
 done:[{
   work:{
@@ -80,7 +110,22 @@ done:[{
   },
   assigned_by_name:{
     type:String
-  }
+    },
+    curr_date: {
+
+    },
+    timestamp: {
+
+    },
+    string_date: {
+
+    },
+    date: {
+        type: String
+    },
+    month: {
+        type: String
+    }
 }],
 // rewardBasket:[{
 //   rewards_received:{
