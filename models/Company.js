@@ -17,7 +17,7 @@ posts:[{
   },
   name:{
     type:String,
-    required:true,
+    
   },
   data:{
     type:String,
@@ -71,7 +71,7 @@ members:[
     name:{
       type:String
     },
-  
+
     rewardBasket:{
       type:Number,
       default:0
