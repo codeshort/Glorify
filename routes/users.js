@@ -69,14 +69,14 @@ router.get('/logout',auth ,async(req,res)=>{
 router.get('/after_login',async(req,res)=>{
 
     try{
-        const token= await req.cookies['jwt'];
+        const token= await req.cookies['jwt'];   //token is generated from cookies
         if(!token)
         {
              throw new Error()
 
         }
-        const decoded=await jwt.verify(token,'secret')
-        const user =await User.findOne({_id:decoded._id})
+        const decoded=await jwt.verify(token,process.env.JWT)  
+        const user =await User.findOne({_id:decoded._id})    //user is found with help of token
         if(!user){
             throw new Error()
         }
@@ -98,7 +98,7 @@ router.get('/after_login',async(req,res)=>{
 
 const upload =multer({
     limits:{
-        fileSize:10000000
+        fileSize:10000000    //the size of image can't be bigger than this
     },fileFilter(req,file,cb){
         if(!file.originalname.match(/\.(jpg|png|jpeg)$/)){
             return cb(new Error('Please upload an img file'))
@@ -111,7 +111,7 @@ const upload =multer({
 
     router.get('/post',auth,async (req,res)=>{
 
-    Company.findOne({companyName:req.user.company},(err,compny)=>{
+    Company.findOne({companyName:req.user.company},(err,compny)=>{  
     var c=compny.posts;
     c.reverse();
     for (i = 0; i < c.length; i++) {
@@ -153,7 +153,7 @@ router.post('/post',auth, upload.single('image') ,async(req,res)=>{
             await compny.save().then(() =>{
                 console.log("post added")
                 console.log(compny.posts)
-            })
+            })//post is saved to database
             res.redirect('/post')
         })
     }catch(e)
@@ -166,9 +166,9 @@ router.post('/post',auth, upload.single('image') ,async(req,res)=>{
 router.get('/click/:id', auth, async (req, res) => {
     await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {//company is extracted from database whose name is equal to user;s company name
         await compny.posts.forEach( async(post) => {
-            if (post.id === req.params.id) {
-                 await req.user.liked_posts.push(post.id)
-                 await  post.likes.push(req.user._id)
+            if (post.id === req.params.id) {//the post from the post array of company database is searched 
+                 await req.user.liked_posts.push(post.id)  //the post is user's liked_post
+                 await  post.likes.push(req.user._id) //user is pushed to the post's likes
                  post.likes_count = await (post.likes_count + 1)
             }
         })

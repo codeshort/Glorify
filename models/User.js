@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const db = 'mongodb+srv://Globalshala:OnlineDatabase@cluster0.wkx7c.mongodb.net/DB?retryWrites=true&w=majority'
-mongoose.connect(db,{useNewUrlParser: true,
+
+mongoose.connect(process.env.DB,{useNewUrlParser: true,
 useUnifiedTopology: true,
 useFindAndModify: false,
 useCreateIndex: true},()=>{
@@ -192,7 +192,7 @@ Total_giveaway_rewards_left:{
 userSchema.methods.generateAuthToken=async function(){
   const usr=this
   console.log("dsds",usr);
-  const token=await jwt.sign({_id:usr._id.toString()},"secret")
+  const token=await jwt.sign({_id:usr._id.toString()},process.env.JWT)
 
   return token
 }

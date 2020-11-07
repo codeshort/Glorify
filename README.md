@@ -51,6 +51,11 @@ Setting up project on your machine
 •	Now you can explore the functionalities of project
 
 
+How to run the web application:-
+Use a browser and visit the link:- https://glorify.herokuapp.com/
+complete signup and login and then you are good to explore the website.
+For details refer to this video on how to use the app.
+
 Targeted towards:-
 •	It will benefit organisations in improving their work culture by bringing the employees together.
 •	The badges and reward system would increase confidence level in employees and will keep       them motivated

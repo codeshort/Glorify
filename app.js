@@ -90,18 +90,18 @@ app.post('/company',auth,async(req,res)=>{
 
 //************* Profile page routing!!********************
 app.get('/profile',auth,(req,res)=>{
-    res.redirect(`/profile/${req.user._id}`)
+    res.redirect(`/profile/${req.user._id}`)  //will be redirected to the profile of the user whose id is entered.
 })
 app.get('/profile/:id',auth,async (req,res)=>{
-    var usr=await User.findById(req.params.id)  
-    var todo_rev = usr.todo;
-    todo_rev.reverse();
+    var usr=await User.findById(req.params.id)  // user having id same as id mentioned in parameters is found
+    var todo_rev = usr.todo;    
+    todo_rev.reverse();  //the tasks assigned later will be displayed at top
     var working_rev =usr.working
-    working_rev.reverse();
+    working_rev.reverse();   //the tasks assigned later will be displayed at top
     var done_rev = usr.done
-    done_rev.reverse();
+    done_rev.reverse();           //the tasks assigned later will be displayed at top
     console.log(todo_rev,working_rev,done_rev,req.params.id)
-    res.render(__dirname+'/public/profile_page/profile',{
+    res.render(__dirname+'/public/profile_page/profile',{//all info of user is rendered to the profile page
         todo: todo_rev,
         working:working_rev,
         done:done_rev,
@@ -116,10 +116,10 @@ app.get('/profile/:id',auth,async (req,res)=>{
 })
 
 app.get('/reward',auth,async (req,res)=>{
-    var profileuser=await User.findById(req.query.usrid)
+    var profileuser=await User.findById(req.query.usrid)   // current user's data is accessed with help of auth
     if(profileuser.hierarchy>req.user.hierarchy)
     {
-        return   res.status(400).redirect(`/profile/${req.query.usrid}`)
+        return   res.status(400).redirect(`/profile/${req.query.usrid}`)//user having hierarchy lower than the other employee can't give rewards to the other employee
     }
     if(profileuser.company===req.user.company)
     {
@@ -127,10 +127,10 @@ app.get('/reward',auth,async (req,res)=>{
         {
             if(  req.user.Total_giveaway_rewards_left< parseInt(req.query.credits))
             {
-                return   res.status(400).redirect(`/profile/${req.query.usrid}`)
+                return   res.status(400).redirect(`/profile/${req.query.usrid}`)//if user is trying to give rewards more than he/she have in the giveaway basket error will be shown
             }
-            profileuser.Total_rewards_received+= parseInt(req.query.credits);
-            req.user.Total_giveaway_rewards_left-= parseInt(req.query.credits);
+            profileuser.Total_rewards_received+= parseInt(req.query.credits);  //rewards would be added to initial Total_rewards_received to whom reward is given.
+            req.user.Total_giveaway_rewards_left-= parseInt(req.query.credits);//rewards would be subtracted from  the giveaway-rewards_received of the pesron who has given the rewards
         }
         if(req.query.badge)
         {
@@ -141,23 +141,23 @@ app.get('/reward',auth,async (req,res)=>{
             }
             if(b==='1')
             {
-                profileuser.badgesBasket['badge1'] += 1;
-                req.user.givebadgeBasket['badge1']-=1;
+                profileuser.badgesBasket['badge1'] += 1;//total count of badge1 of badgesBasket of user receiving badgeswill be incremented by 1
+                req.user.givebadgeBasket['badge1'] -= 1;//total count of badge1 of givebadgeBasket of user giving badges will be decremented by 1
             }
             if (b === '2')
             {
-                profileuser.badgesBasket['badge2'] += 1;
-                req.user.givebadgeBasket['badge2']-=1;
+                profileuser.badgesBasket['badge2'] += 1;//total count of badge2 of badgesBasket of user will be incremented by 1
+                req.user.givebadgeBasket['badge2'] -= 1;//total count of badge1 of givebadgeBasket of user will be decremented by 1
             }
             if (b === '3')
             {
-                profileuser.badgesBasket['badge3'] += 1;
-                req.user.givebadgeBasket['badge3']-=1;
+                profileuser.badgesBasket['badge3'] += 1;//total count of badge3 of badgesBasket of user will be incremented by 1
+                req.user.givebadgeBasket['badge3'] -= 1;//total count of badge1 of givebadgeBasket of user will be decremented by 1
             }
             if (b === '4')
             {
-                profileuser.badgesBasket['badge4'] += 1;
-                req.user.givebadgeBasket['badge4']-=1;
+                profileuser.badgesBasket['badge4'] += 1;//total count of badge4 of badgesBasket of user will be incremented by 1
+                req.user.givebadgeBasket['badge4'] -= 1;//total count of badge1 of givebadgeBasket of user will be decremented by 1
             }
 
             profileuser.save().then(()=>{
@@ -208,14 +208,14 @@ app.post('/profile/post/add',auth,async(req,res)=>{
             else if(req.query.initial=="working")
             {
                 var added=  await req.user.working.find(el => el._id == req.query.obj);
-                req.user.working= await req.user.working.filter(el => el._id!= req.query.obj);
-                await req.user.todo.push(added);
+                req.user.working= await req.user.working.filter(el => el._id!= req.query.obj);//the task is pushed to working
+                await req.user.todo.push(added);// task is deleted from to do
             }
             else if(req.query.initial=="done")
             {
                 var added=  await req.user.done.find(el => el._id == req.query.obj);
-                req.user.done= await req.user.done.filter(el => el._id!= req.query.obj);
-                await req.user.todo.push(added);
+                req.user.done = await req.user.done.filter(el => el._id != req.query.obj);//the task is pushed to done
+                await req.user.todo.push(added);// task is deleted from to do
             }
         }
         else {
@@ -228,7 +228,7 @@ app.post('/profile/post/add',auth,async(req,res)=>{
                 string_date: Date(),
                 date: (Date())[8] + (Date())[9],
                 month: (Date())[4] + (Date())[5] + (Date())[6]
-            });
+            });//the task is pushed to to-do array
         }
 
         await req.user.save().then(() => {
@@ -252,8 +252,8 @@ app.post('/profile/post/working',auth,async(req,res)=>{
             if(req.query.initial=="todo")
             {
                 var added=  await req.user.todo.find(el => el._id == req.query.obj);
-                req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);
-                await req.user.working.push(added);
+                req.user.todo= await req.user.todo.filter(el => el._id!= req.query.obj);//task is pushed to to-do
+                await req.user.working.push(added);//task is deleted from working
             }
             else if(req.query.initial=="working")
             {
@@ -262,8 +262,8 @@ app.post('/profile/post/working',auth,async(req,res)=>{
             else if(req.query.initial=="done")
             {
                 var added=  await req.user.done.find(el => el._id == req.query.obj);
-                req.user.done= await req.user.done.filter(el => el._id!= req.query.obj);
-                await req.user.working.push(added);
+                req.user.done = await req.user.done.filter(el => el._id != req.query.obj);//task is pushed to done
+                await req.user.working.push(added);//task is deleted from working
             }
         }
         else {
@@ -276,7 +276,7 @@ app.post('/profile/post/working',auth,async(req,res)=>{
                 string_date: Date(),
                 date: (Date())[8] + (Date())[9],
                 month: (Date())[4] + (Date())[5] + (Date())[6]
-            })
+            })//task is pushed to working array
 
         }
 
@@ -327,7 +327,7 @@ app.post('/profile/post/done',auth,async(req,res)=>{
                 string_date: Date(),
                 date: (Date())[8] + (Date())[9],
                 month: (Date())[4] + (Date())[5] + (Date())[6]
-             })
+             })//task is pushed to done array
         }
         req.user.save().then(() =>
         {
@@ -353,11 +353,11 @@ app.post('/join',auth, async (req,res)=>{
         if(req.user.isInCompany)
         {
             return  res.render(path.join(__dirname+'/public/host-join_company_pages/companyjoin'),{
-                joinmsg: "You can only join one company at a time!",
+                joinmsg: "You can only join one company at a time!",//will display an error message if user is already part of another company
             });
         }
         var comp_code = req.body.CompanyCode
-        Company.findOne({companyCode: comp_code},'companyName members', async(err,compny) =>{
+        Company.findOne({companyCode: comp_code},'companyName members', async(err,compny) =>{//company info is fetched from database whose code is equal to code entered
             if(err)
             {
                 console.log('error box ', err)
@@ -366,16 +366,16 @@ app.post('/join',auth, async (req,res)=>{
             found_company= compny.companyName
             const login_id = req.user._id
             await User.findOneAndUpdate({_id: login_id} , {company: found_company ,   Designation:req.body.Designation,
-                                                    hierarchy:req.body.hierarchy,isInCompany: true , isAdmin:false} );
+                                                    hierarchy:req.body.hierarchy,isInCompany: true , isAdmin:false} );//in users schema of the current user these fields are updated.
             try{
                 var obj={
                     userID:req.user._id,
                     name:req.user.Username
                 }
                 var comp_members = compny.members;
-                comp_members.push(obj)
+                comp_members.push(obj)//the user requesting join is pushed to the company members array
                 compny.members= comp_members
-                compny.save().then(() =>{
+                compny.save().then(() =>{//saving compny
                 })
             }
 
@@ -398,11 +398,11 @@ app.get('/search',auth,async (req,res)=>{
     var mem= compny.members;
     if(req.query.searched_user)
     {
-        mem=mem.filter((m)=>{
+        mem=mem.filter((m)=>{ //user having name same as searched name is extracted from database
         return m.name===req.query.searched_user
         })
     }
-    res.render(path.join(__dirname+'/public/search/search'),{member:mem })
+    res.render(path.join(__dirname+'/public/search/search'),{member:mem })//the member having name same as searched will be shown
 })
 
 
@@ -412,8 +412,8 @@ app.get('/search',auth,async (req,res)=>{
 app.post('/profile/post/sendmail',auth,async (req,res)=>{
     try{
         var work= await req.user.done.find(el => el._id== req.query.obj);
-        const user =await User.findOne({_id:work.assigned_by})
-        workdone(user.email,work.work,req.user.Username)
+        const user =await User.findOne({_id:work.assigned_by})//user who assigned the task is fetched
+        workdone(user.email,work.work,req.user.Username)//email is sent to the persn who assigned the task
         res.redirect('/profile')
     }
     catch(e)
@@ -426,6 +426,6 @@ app.post('/profile/post/sendmail',auth,async (req,res)=>{
 
 
 
-app.listen(3000, ()=>{
-    console.log('server is up on 3000')
+app.listen(process.env.PORT, ()=>{
+    console.log('server is up on 3000')  //printing of this line on console means the server has started
 });
