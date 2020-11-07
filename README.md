@@ -60,7 +60,7 @@ HandleBars**
 
 ## Routes:-
 
-- **\** :- For signup
+- \ :- For signup
 
 - **\login** :- For login
 - **\after_login** :- For home page
