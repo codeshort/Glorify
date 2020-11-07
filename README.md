@@ -43,9 +43,9 @@ From their profile page users can keep a track of their project. **Any task can 
 
 
 ## Functionalities:-
-•	Allows employees to keep records of their to do, working and done tasks along with the date at which task was assigned.
-•	Allows employees to give rewards or badges to each other.(Note:-Only an employee having higher or equal hierarchy to other one can give rewards or badges to him/her.)
-•	Allows employees to upload posts on company page and improve communication with each other
+- •	Allows employees to keep records of their to do, working and done tasks along with the date at which task was assigned.
+- •	Allows employees to give rewards or badges to each other.(Note:-Only an employee having higher or equal hierarchy to other one can give rewards or badges to him/her.)
+- •	Allows employees to upload posts on company page and improve communication with each other
  
 ## Tech-Stack:-
 **nodejs
@@ -72,8 +72,8 @@ HandleBars**
 
 
 ## APIs Used:-
-•	A sendgrid API key is used for sending mails.
-•	MongoDB cluster connection string is required to connect to online database.
+- 	A sendgrid API key is used for sending mails.
+- 	MongoDB cluster connection string is required to connect to online database.
 
 
 ## Setting up project on your machine
@@ -81,17 +81,17 @@ HandleBars**
    - Install the packages
          
     
-•	Open command prompt
-•	Change the current directory to Glorify using command "cd dirName"
-•	Then use the following command to install packages "npm install"
+- 	Open command prompt
+- 	Change the current directory to Glorify using command "cd dirName"
+- 	Then use the following command to install packages "npm install"
 
    Running the project:-
-•	Open command prompt
-•	Change the current directory to Glorify using command "cd dirName"
-•	Type nodemon app.js
-•	Open browser
-•	Enter url localhost:3000/
-•	Now you can explore the functionalities of project
+- 	Open command prompt
+- 	Change the current directory to Glorify using command "cd dirName"
+- 	Type nodemon app.js
+- 	Open browser
+- 	Enter url localhost:3000/
+- 	Now you can explore the functionalities of project
 
 
 ## How to run the web application:-
@@ -100,9 +100,9 @@ HandleBars**
 ## For details refer to this video on how to use the app:- https://youtu.be/k2NWW0Gt9P4
 
 ## Targeted towards:-
-•	It will benefit organisations in improving their work culture by bringing the employees together.
-•	The badges and reward system would increase confidence level in employees and will keep       them motivated
-•	Keeping track of their tasks would help employee in better office management
+-	It will benefit organisations in improving their work culture by bringing the employees together.
+-	The badges and reward system would increase confidence level in employees and will keep       them motivated
+-	Keeping track of their tasks would help employee in better office management
 
 
 
