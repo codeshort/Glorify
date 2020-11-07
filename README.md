@@ -37,7 +37,7 @@ Setting up project on your machine
    Clone the project
    Install the packages
          
-         npm install packageName
+    
 •	Open command prompt
 •	Change the current directory to Glorify using command "cd dirName"
 •	Then use the following command to install packages "npm install packageName"
@@ -54,7 +54,7 @@ Setting up project on your machine
 How to run the web application:-
 Use a browser and visit the link:- https://glorify.herokuapp.com/
 complete signup and login and then you are good to explore the website.
-For details refer to this video on how to use the app.
+For details refer to this video on how to use the app:- https://youtu.be/k2NWW0Gt9P4
 
 Targeted towards:-
 •	It will benefit organisations in improving their work culture by bringing the employees together.
