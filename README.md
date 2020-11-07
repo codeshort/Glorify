@@ -40,7 +40,7 @@ Setting up project on your machine
     
 •	Open command prompt
 •	Change the current directory to Glorify using command "cd dirName"
-•	Then use the following command to install packages "npm install packageName"
+•	Then use the following command to install packages "npm install"
 
    Running the project:-
 •	Open command prompt
