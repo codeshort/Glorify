@@ -48,15 +48,15 @@ From their profile page users can keep a track of their project. **Any task can 
 - •	Allows employees to upload posts on company page and improve communication with each other
  
 ## Tech-Stack:-
-**nodejs
-mongodb
-express
-mongoose
-bootstrap
-Sendgrid API
-Mongo DB Clutser
-Geo Location API
-HandleBars**
+- nodejs
+- mongodb
+- express
+- mongoose
+- bootstrap
+- Sendgrid API
+- Mongo DB Clutser
+- Geo Location API
+- HandleBars
 
 ## Routes:-
 
