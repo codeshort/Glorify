@@ -1,10 +1,8 @@
-# Random
-Work-Culture Glorified
 Project Name:-
 Glorify
 
 About Project:-
-  The website helps company to glorify their work culture by bringing all employees under one           umbrella . Any employee first needs to create an account on the website by signing up. Then after login the employee would be directed again to home page but this time with options of viewing profile, joining a company or hosting a company. The profile page will contain all information about the rewards and badges received and given by the person. The status of tasks assigned to the employee will also be present in profile page. Registration of the company has to be done by HR and then a code would be generated. Now employees can join the company portal using company code and company name . After joining the company they will be redirected to a post page where the employees can post to appreciate someone. The post page will also contain leaderboard of all the employees of the company. 
+  The website helps company to glorify their work culture by bringing all employees under one  umbrella . Any employee first needs to create an account on the website by signing up. Then after login the employee would be directed again to home page but this time with options of viewing profile, joining a company or hosting a company. The profile page will contain all information about the rewards and badges received and given by the person. The status of tasks assigned to the employee will also be present in profile page. Registration of the company has to be done by HR and then a code would be generated. Now employees can join the company portal using company code and company name . After joining the company they will be redirected to a post page where the employees can post to appreciate someone. The post page will also contain leader-board of all the employees of the company.Project . From their profile page users can keep a track of their project. Any task can be assigned to an employee by another employee based on their hierarchy level.Any project will have one of the three status-To do, Working or Done. If the task is yet to be started the employee can add task in the To do section. If the task has been started but not yet completed the employee can add task in the Working section. If the task has been completed the employee can add task in the Done section.In To Do section every task will have three buttons. One button can be used to push the task to Working section. Second button can be used to push the task to Done section and third button can be used to delete task.In Working section every task will have three buttons. One button can be used to push the task to To Do section. Second button can be used to push the task to Done section and third button can be used to delete task.In Done section every task will have four buttons. One button can be used to push the task to To-do section. Second button can be used to push the task to Working section, third button can be used to delete task and there will be a fourth button that can be used to send a mail about completion of task.Tasks in done section will contain a send-mail button. On clicking this button a mail would be sent to the person who has assigned the task and he/she will be informed that the task is completed.
 
 
 Functionalities:-
@@ -12,59 +10,56 @@ Functionalities:-
 •	Allows employees to give rewards or badges to each other.(Note:-Only an  employee having higher or equal hierarchy to other one can give rewards or badges to him/her.)
 •	Allows employees to upload posts on company page and improve communication with each other
  
-Softwares Required:-
+Tech-Stack:-
 nodejs
 mongodb
+express
+mongoose
 bootstrap
 
+Routes:-
+\ :- For signup
+\login :- For login
+\after_login :- For home page
+\join :- For joining a company
+\company:- For hosting a company
+\profile\:id :- For opening profile of the person having id equal to id passed in the route.
+\post :- For opening the post page of a company.
+\search :- For opening a search page where employees can search other employees.
+
+
+APIs Used:-
+•	A sendgrid API key is used for sending mails.
+•	MongoDB cluster connection string is required to connect to online database.
 
 
 Setting up project on your machine
-   Clone the project:-For cloning open your git and type the following command:-
-                       git clone https://github.com/codeshort/Glorify.git
-   Install the pakages:-
-         Packages required:-
-             "@sendgrid/mail": "^7.3.0",
-             "bcrypt": "^5.0.0",
-             "bcryptjs": "^2.4.3",
-             "body-parser": "^1.19.0",
-             "bootstrap": "^4.5.3",
-             "cookie-parser": "^1.4.5",
-             "cors": "^2.8.5",
-             "debug": "^2.6.9",
-             "express": "^4.17.1",
-             "handlebars": "^4.7.6",
-    	     "hbs": "^4.1.1",
-    	     "http-errors": "^1.8.0",
-             "jsonwebtoken": "^8.5.1",
-             "mongoose": "^5.10.12",
-             "mongoose-timestamp": "^0.6.0",
-             "morgan": "^1.10.0",
-             "multer": "^1.4.2",
-             "nodemon": "^2.0.6",
-             "path": "^0.12.7",
-             "sharp": "^0.26.2"   
-
-
-
-
-
-
-         Installation:-
+   Clone the project
+   Install the packages
+         
+         npm install packageName
 •	Open command prompt
 •	Change the current directory to Glorify using command "cd dirName"
 •	Then use the following command to install packages "npm install packageName"
+
    Running the project:-
 •	Open command prompt
 •	Change the current directory to Glorify using command "cd dirName"
 •	Type nodemon app.js
 •	Open browser
-•	Enter url localhost:3000/main_page
+•	Enter url localhost:3000/
 •	Now you can explore the functionalities of project
 
 
-Scalability:-
-•	It will benefit organisations in improving their work culture by bringing the employees together.
-•	The badges and reward system would increase confidence level in employees and will keep them motivated
+How to run the web application:-
+Use a browser and visit the link:- https://glorify.herokuapp.com/
+complete signup and login and then you are good to explore the website.
+For details refer to this video on how to use the app.
 
-          
+Targeted towards:-
+•	It will benefit organisations in improving their work culture by bringing the employees together.
+•	The badges and reward system would increase confidence level in employees and will keep       them motivated
+•	Keeping track of their tasks would help employee in better office management
+
+
+

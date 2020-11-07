@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail')
 
 
-sgMail.setApiKey('')
+sgMail.setApiKey(process.env.SENDGRID_KEY)
 
 const workdone = (email, worktitle, assigned_to) => {
 

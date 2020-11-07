@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const db = 'mongodb+srv://Globalshala:OnlineDatabase@cluster0.wkx7c.mongodb.net/DB?retryWrites=true&w=majority'
-mongoose.connect(db,{useNewUrlParser: true,
+
+mongoose.connect(process.env.DB,{useNewUrlParser: true,
 useUnifiedTopology: true,
 useFindAndModify: false,
 useCreateIndex: true},()=>{
@@ -86,22 +86,22 @@ working:[{
   },
   assigned_by_name:{
     type:String
-    },
-    curr_date: {
+  },
+  curr_date: {
 
-    },
-    timestamp: {
+  },
+  timestamp: {
 
-    },
-    string_date: {
+  },
+  string_date: {
 
-    },
-    date: {
-        type: String
-    },
-    month: {
-        type: String
-    }
+  },
+  date: {
+    type: String
+  },
+  month: {
+    type: String
+  }
 }],
 done:[{
   work:{
@@ -112,39 +112,23 @@ done:[{
   },
   assigned_by_name:{
     type:String
-    },
-    curr_date: {
+  },
+  curr_date: {
 
-    },
-    timestamp: {
+  },
+  timestamp: {
 
-    },
-    string_date: {
+  },
+  string_date: {
 
-    },
-    date: {
-        type: String
-    },
-    month: {
-        type: String
-    }
+  },
+  date: {
+    type: String
+  },
+  month: {
+    type: String
+  }
 }],
-// rewardBasket:[{
-//   rewards_received:{
-//     type:Number
-//   },
-//   rewards_given_by:{
-//     type:mongoose.Schema.Types.ObjectID
-//   }
-// }],
-// giveawayBasket:[{
-//   rewards_given:{
-//     type:Number
-//   },
-//   rewards_given_to:{
-//     type:mongoose.Schema.Types.ObjectID
-//   }
-// }],
 badgesBasket:{
   badge1:{
     type:Number
@@ -198,9 +182,9 @@ Total_giveaway_rewards_left:{
   type:Number,
   default:1000
     },
-    liked_posts: [{
-        type:mongoose.Schema.Types.ObjectID
-    }]
+  liked_posts: [{
+    type:mongoose.Schema.Types.ObjectID
+  }]
 })
 
 
@@ -208,9 +192,9 @@ Total_giveaway_rewards_left:{
 userSchema.methods.generateAuthToken=async function(){
   const usr=this
   console.log("dsds",usr);
-  const token=await jwt.sign({_id:usr._id.toString()},"secret")
+  const token=await jwt.sign({_id:usr._id.toString()},process.env.JWT)
 
-    return token
+  return token
 }
 userSchema.statics.findByCredentials=async(email,password)=>{
   const usr=await User.findOne({email})
