@@ -55,7 +55,7 @@ From their profile page users can keep a track of their project. **Any task can 
 - bootstrap
 - Sendgrid API
 - Mongo DB Clutser
-- Geo Location API
+- Map Box API
 - HandleBars
 
 ## Routes:-
