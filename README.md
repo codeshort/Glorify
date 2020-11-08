@@ -84,7 +84,7 @@ From their profile page users can keep a track of their project. **Any task can 
 - 	Open command prompt
 - 	Change the current directory to Glorify using command "cd dirName"
 - 	Then use the following command to install packages "npm install"
-
+-   Anyone cloning project must have their own .env file that will conatin the APIs link and database connection link
    Running the project:-
 - 	Open command prompt
 - 	Change the current directory to Glorify using command "cd dirName"
