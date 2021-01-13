@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+require('dotenv').config();
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
@@ -35,7 +36,7 @@ app.use(indexRouter);
 app.use(usersRouter);
 
 app.get('/',(req,res)=>{
-    res.render(path.join(__dirname+'/../public/Sign/signup-signin'));//will render the signup-signin page 
+    res.render(path.join(__dirname+'/../public/Sign/signup-signin'));//will render the signup-signin page
 })
 
 
@@ -67,7 +68,7 @@ app.post('/company',auth,async(req,res)=>{
                         badgesBasket:{badge1:0,badge2:0,badge3:0,badge4:0},
                         givebadgeBasket:{badge1:3,badge2:3,badge3:3,badge4:3},
                     }],
-                    companyCode:hash  
+                    companyCode:hash
                 })
                 comp.save().then(()=>{   //comp is saved to company database
                 console.log('Company Registered')
@@ -80,7 +81,7 @@ app.post('/company',auth,async(req,res)=>{
             userID:req.user._id,
             rewardBasket:0,
             giveawayBasket:0
-        } 
+        }
          res.redirect('/profile')         //will be rediected to profile after joining.
     }
   catch(e) {}
@@ -94,7 +95,7 @@ app.get('/profile',auth,(req,res)=>{
 })
 app.get('/profile/:id',auth,async (req,res)=>{
     var usr=await User.findById(req.params.id)  // user having id same as id mentioned in parameters is found
-    var todo_rev = usr.todo;    
+    var todo_rev = usr.todo;
     todo_rev.reverse();  //the tasks assigned later will be displayed at top
     var working_rev =usr.working
     working_rev.reverse();   //the tasks assigned later will be displayed at top

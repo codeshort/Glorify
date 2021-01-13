@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
@@ -10,7 +10,7 @@
 			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 			<link rel="stylesheet" href="https://cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
 			<link rel="stylesheet" href="/posts-page/style.css">
-
+			<link rel="stylesheet" href="/posts-page/style_post.css">
 		<title></title>
 	</head>
 	<body>
@@ -99,38 +99,45 @@
 									<input style="position:relative;margin-left:10px;" type="file" id="image" name="image">
 									<p style="position:relative;margin-left:10px;">Upload image</p>
 									<button style="height:35px;width:70px;position:relative;margin-bottom:2px;margin-left:624px;background-color:#3b5998;color:white;font-size:18px;" type="submit">POST</button><!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
-
+								</form>
 									<hr />
 							</div>
 
-							<div class="profile-feed">
-								{{#each feed}}
-								<div class="d-flex align-items-start profile-feed-item">
-									<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="profile" class="img-sm rounded-circle">
-									<div class="ml-4">
-										<h6>
-											{{this.name}}
-											<small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>{{this.date}}  {{this.month}} -  {{this.hour}}:{{this.min}}</small>
-										</h6>
-										<p>
-											{{this.data}}
 
-										</p>
+							<div class="page-content page-container" id="page-content">
 
-										<img src="data:image/png; base64 ,{{this.image}}" alt="sample" class="rounded mw-100">
-										<p class="small text-muted mt-2 mb-0">
-											<span>
-												<a style="text-decoration:none; color:inherit;" href="/click/{{this._id}}"><i class="mdi mdi-star mr-1"></i></a>{{this.likes_count}}
-											</span>
-
-										</p>
-									</div>
-								</div>
-								{{/each}}
-
-
-
+							    <div class="padding">
+							        <div class="row container d-flex justify-content-center">
+							            <div class="col-md-12">	{{#each feed}}
+							                <div class="box box-widget">
+							                    <div class="box-header with-border">
+							                        <div class="user-block"> <img class="img-circle" src="https://img.icons8.com/color/36/000000/guest-male.png" alt="User Image"> <span class="username"><a href="#" data-abc="true">	{{this.name}}</a></span> <span class="description">{{this.date}}  {{this.month}} -  {{this.hour}}:{{this.min}}</span> </div>
+							                        <!-- <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
+							                    </div> -->
+							                    <div class="box-body"> <img class="img-responsive pad" src="data:image/png; base64 ,{{this.image}}" alt="Photo">
+							                        <p>			{{this.data}}</p> 	<a style="text-decoration:none; color:inherit;" href="/click/{{this._id}}"><i class="fa fa-thumbs-o-up"></i></a><span class="pull-right text-muted">{{this.likes_count}} likes - {{this.comments.length}} comments</span>
+							                    </div>
+							                    <div class="box-footer box-comments">
+																			{{#each this.comments}}
+							                        <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="User Image">
+							                            <div class="comment-text"> <span class="username">{{this.name}} <span class="text-muted pull-right">{{this.date}}  {{this.month}} -  {{this.hour}}:{{this.min}}</span> </span>
+							                               {{this.comment}} </div>
+							                        </div>
+																			{{/each}}
+							                    </div>
+							                    <div class="box-footer">
+							                        <form action="/comment/{{this._id}}" method="post"> <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
+							                            <div class="img-push"> <input type="text" autocomplete="off" class="form-control input-sm" placeholder="Press enter to post comment" name="comment"> </div>
+							                        </form>
+							                    </div>
+							                </div>{{/each}}
+							            </div>
+							        </div>
+							    </div>
 							</div>
+
+
+
 						</div>
 		              </div>
 		            </div>
