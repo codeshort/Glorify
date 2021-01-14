@@ -9,6 +9,8 @@ var path = require('path');
 const sharp=require('sharp');
 const jwt =require('jsonwebtoken')
 var mongoose = require('mongoose')
+var Filter = require('bad-words'),
+filter = new Filter();
 
 
 router.get('/login',async (req,res)=>{
@@ -75,7 +77,7 @@ router.get('/after_login',async(req,res)=>{
              throw new Error()
 
         }
-        const decoded=await jwt.verify(token,process.env.JWT)  
+        const decoded=await jwt.verify(token,process.env.JWT)
         const user =await User.findOne({_id:decoded._id})    //user is found with help of token
         if(!user){
             throw new Error()
@@ -111,7 +113,7 @@ const upload =multer({
 
     router.get('/post',auth,async (req,res)=>{
 
-    Company.findOne({companyName:req.user.company},(err,compny)=>{  
+    Company.findOne({companyName:req.user.company},(err,compny)=>{
     var c=compny.posts;
     c.reverse();
     for (i = 0; i < c.length; i++) {
@@ -138,50 +140,92 @@ const upload =multer({
 
 router.post('/post',auth, upload.single('image') ,async(req,res)=>{
 
-    try{
-        console.log(req.file,req.file.buffer)
-        var postimage="";
-        upload.single(req.body.image)
-        const buffer= await sharp(req.file.buffer).resize({width:250,height:250}).png().toBuffer()
-        console.log(req.body)
-        await Company.findOne({companyName:req.user.company},async(err,compny)=>{
-            await compny.posts.push({
-                user: req.user._id,name:req.user.Username, data: req.body.data, contains_image: req.body.contains_image, image: buffer, curr_date: new Date(), timestamp: Date.now(), string_date: Date(), date: (Date())[8] + (Date())[9],
-                month: (Date())[4] + (Date())[5] + (Date())[6], hour: (Date())[16] + (Date())[17], min: (Date())[19] + (Date())[20]
-            })
-            console.log(compny)
-            await compny.save().then(() =>{
-                console.log("post added")
-                console.log(compny.posts)
-            })//post is saved to database
-            res.redirect('/post')
-        })
-    }catch(e)
-        {
-             console.log(e);
-        }
+try{
+  console.log(req.file,req.file.buffer)
+  var postimage="";
+  upload.single(req.body.image)
+  const buffer= await sharp(req.file.buffer).resize({width:250,height:250}).png().toBuffer()
+
+
+   console.log(req.body)
+
+  await Company.findOne({companyName:req.user.company},async(err,compny)=>{
+      await compny.posts.push({
+          user: req.user._id,name:req.user.Username, data: filter.clean(req.body.data), contains_image: req.body.contains_image, image: buffer, date: (Date())[8] + (Date())[9],
+          month: (Date())[4] + (Date())[5] + (Date())[6], hour: (Date())[16] + (Date())[17], min: (Date())[19] + (Date())[20]})
+          console.log(compny)
+      await compny.save().then(() =>{
+       console.log("post added")
+       console.log(compny.posts)
+      })
+      res.redirect('/post')
+  })
+}catch(e)
+  {
+      console.log(e);
+    }
 })
 
 
 router.get('/click/:id', auth, async (req, res) => {
-    await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {//company is extracted from database whose name is equal to user;s company name
+  await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {
+
         await compny.posts.forEach( async(post) => {
-            if (post.id === req.params.id) {//the post from the post array of company database is searched 
-                 await req.user.liked_posts.push(post.id)  //the post is user's liked_post
-                 await  post.likes.push(req.user._id) //user is pushed to the post's likes
-                 post.likes_count = await (post.likes_count + 1)
+            if (post.id === req.params.id) {
+                // await req.user.liked_posts.push(post.id)
+                const p=post.likes.filter((el)=>{
+                  return el.toString()!==req.user._id.toString();
+                })
+                if(p.length==post.likes.length)
+                {
+                 await  post.likes.push(req.user._id)
+                 post.likes_count =    await (post.likes_count + 1)
+               }
+               else{
+                    post.likes=    await p;
+                     post.likes_count =    await (post.likes_count -1);
+                     console.log("decreasing likes")
+               }
             }
+
         })
         await compny.save().then(() => {
             console.log('Likes increased')
         })
-        await   req.user.save().then(() => {
-        })
+      // await   req.user.save().then(() => {
+      //   })
+
     })
     res.redirect('/post')
 
 })
 
+
+router.post('/comment/:id', auth, async (req, res) => {
+  await  Company.findOne({ companyName: req.user.company }, async(err, compny) => {
+
+        await compny.posts.forEach( async(post) => {
+            if (post.id === req.params.id) {
+                 // await req.user.liked_posts.push(post.id)
+                 // await  post.likes.push(req.user._id)
+           // post.likes_count =    await (post.likes_count + 1)
+
+
+
+
+              post.comments.push({comment:filter.clean(req.body.comment),user:req.user._id,name:req.user.Username,date: (Date())[8] + (Date())[9],
+              month: (Date())[4] + (Date())[5] + (Date())[6], hour: (Date())[16] + (Date())[17], min: (Date())[19] + (Date())[20]})
+            }
+
+        })
+        await compny.save().then(() => {
+            console.log('Comment added')
+        })
+
+    })
+    res.redirect('/post')
+
+})
 
 
 
